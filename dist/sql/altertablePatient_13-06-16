@@ -1,0 +1,4 @@
+ALTER TABLE `dbhcare`.`patient` 
+ADD COLUMN `dateCreated` DATE NULL AFTER `specifyCareType`,
+ADD COLUMN `dateUpdated` TIMESTAMP NULL AFTER `dateCreated`;
+

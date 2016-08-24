@@ -1,0 +1,9 @@
+{
+    "config": {
+        "process-timeout": 1800,
+        "vendor-dir": "app/vendor"
+    },
+    "require": {
+        "phpoffice/phpexcel": "^1.8"
+    }
+}

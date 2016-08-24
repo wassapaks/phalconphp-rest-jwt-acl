@@ -1,0 +1,25 @@
+{
+  "name": "geeksnest/apiframework",
+  "description": "API Framework of Geeksnest",
+  "authors": [
+    {
+      "name": "Efren Bautista",
+      "email": "efren.bautista.jr@geeksnest.com"
+    }
+  ],
+  "config": {
+    "process-timeout": 1800,
+    "vendor-dir": "vendor"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/tpyo/amazon-s3-php-class.git"
+    }
+  ],
+  "require": {
+    "zircote/swagger-php": "^2.0",
+    "tpyo/amazon-s3-php-class": "dev-master",
+    "firebase/php-jwt": "^3.0"
+  }
+}
