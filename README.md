@@ -1,13 +1,21 @@
-Phalcon Rest JWT API
+Phalcon Rest JWT
 =================
 
 First of all i wanna give credits to CMOORE, Jeteokefe and Redound for their outstanding Phalcon Rest API Framework, i have learned a lot from your work, i took some of your code integrated them to create my own version of PhalconRest Micro Framework with JWT and ACL.
 
-Geeksnest JWT API uses Phalcon Micro framework and base from PHP HMAC Restul API Framework authored by Jet
 
-The framework requires PHP 5.4+ up to PHP 7.0(Could run on 5.3 if you replace 5.4 array syntax with the older php version)
+This project uses Phalcon Micro Framework for REST API with JWT and ACL
+---------------------------------------------------
 
-Can run on Phalcon 2.0+
+The purpose of this project is to have a base Phalcon REST API framework with JWT and ACL applied. Another purpose also is to apply the best practices done by Cmoore, Jeteokefe and Redound. 
+
+This project idea is a collection of different approaches from the most popular phalcon rest api frameworks created, and with some of my ideas to enhance their existing approaches.
+
+Things i have done: I added an easy to setup routes for each collections separated in each file, a JWT authentication event, and an ACL records checking event for each user, response and request envelopes (request class is from redound) and other functions from other existing phalcon rest frameworks. You may find some of the codes familiar, i have added comments to credit the code owner and also to identify which are my creations.
+
+Using kcachegrind and xdebug to optimize spead and micro framework setup of routes collections. (Caching of routes is not yet available but currently i made a workaround for speed, that will be for next release).
+
+
 
 Why do this?
 http://www.thebuzzmedia.com/designing-a-secure-rest-api-without-oauth-authentication/
@@ -21,6 +29,7 @@ Required PHP Modules
 - OpenSSL
 - Phalcon (http://phalconphp.com/en/download)
 - PDO-MySQL
+- make
 
 To check for those modules
 ```bash
