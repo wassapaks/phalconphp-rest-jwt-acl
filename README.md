@@ -1,20 +1,19 @@
 Phalcon Rest JWT
 =================
 
-First of all i wanna give credits to CMOORE, Jeteokefe and Redound for their outstanding Phalcon Rest API Framework, i have learned a lot from your work, i took some of your code integrated them to create my own version of PhalconRest Micro Framework with JWT and ACL.
+First of all i wanna give credits to CMOORE, Jeteokefe and Redound for their outstanding Phalcon Rest API Frameworks, i have learned a lot from your work, i took some of your code integrated them to create my own version of PhalconRest Micro Framework with JWT and ACL.
 
 
 This project uses Phalcon Micro Framework for REST API with JWT and ACL
 ---------------------------------------------------
 
-The purpose of this project is to have a base Phalcon REST API framework with JWT and ACL applied. Another purpose also is to apply the best practices done by Cmoore, Jeteokefe and Redound. 
+The purpose of this project is to have a base Phalcon REST API framework with JWT and ACL applied. And also to apply the best practices done by Cmoore, Jeteokefe and Redound. 
 
 This project idea is a collection of different approaches from the most popular phalcon rest api frameworks created, and with some of my ideas to enhance their existing approaches.
 
-Things i have done: I added an easy to setup routes for each collections separated in each file, a JWT authentication event, and an ACL records checking event for each user, response and request envelopes (request class is from redound) and other functions from other existing phalcon rest frameworks. You may find some of the codes familiar, i have added comments to credit the code owner and also to identify which are my creations.
+Things that i have done: I added an easy to setup routes for each collections separated in each file, a JWT authentication event, and an ACL records checking event for each user, response and request envelopes (request class is from redound) and other functions from other existing phalcon rest frameworks. You may find some of the codes familiar, i have added comments to credit the code owner and also to identify which are my creations.
 
-Using kcachegrind and xdebug to optimize spead and micro framework setup of routes collections. (Caching of routes is not yet available but currently i made a workaround for speed, that will be for next release).
-
+Because phalconphp is all about speed and usability, using kcachegrind and xdebug to optimize the micro route collection setup when having a large route collection. ( Caching of routes is not yet available but currently i made a workaround for speed, that will be for next release).
 
 
 Why do this?
@@ -22,67 +21,46 @@ http://www.thebuzzmedia.com/designing-a-secure-rest-api-without-oauth-authentica
 
 Requirements
 ---------
-PHP 5.4 or greater
-
-
-Required PHP Modules
-- OpenSSL
-- Phalcon (http://phalconphp.com/en/download)
-- PDO-MySQL
-- make
-
-To check for those modules
-```bash
-$ php -m | egrep "(phalcon|pdo_mysql|openssl)"
-phalcon
-pdo_mysql
-openssl
-```
+-PHP 5.4 above until 7
+-Phalcon 2 until 3
+-PDO-MySQL
+-OpenSSL
+-make
 
 Configuration (Database, URL's, Redis and Others)
 --------------
-Open  `dist/config/` and and create your own config-<your-extention-name>.php setup your database connection credentials and other configuration credentials
+Open  `/app/config/` and and create your own config.<your-desired-name>.php setup your database connection credentials and other configuration credentials
+
+Change the env ```env => 'dev'``` to prod when your on the production server.
 
 ```php
-/**
- * Settings to be stored in dependency injector
- */
 $settings = array(
     'database' => array(
-        'adapter' => 'Mysql',	/* Possible Values: Mysql, Postgres, Sqlite */
+        'adapter' => 'Mysql',   /* Possible Values: Mysql, Postgres, Sqlite */
         'host' => 'localhost',
         'username' => 'root',
         'password' => 'adminadmin123',
-        'name' => 'gn',
+        'name' => 'dbsample',
         'port' => 3306
     ),
     'application' => array(
-        'baseURL' => 'http://pi.loc',
-        'apiURL' => 'http://pi.api',
+        'baseURL' => 'http://youreSITEipordomain',
+        'apiURL' => 'http://youreRESTipordomain',
+        'env' => 'dev' /* dev or prod */
     ),
-    'hashkey' => '4a478258bd8e11f4046d6fe49471401893d69469',
-    'postmark' => array(
-        'url' => 'https://api.postmarkapp.com/email',
-        'token' => '016e0c8c-d974-491f-b17d-f9c89915ec0a',
-        'signature' => 'contact@geeksnest.com'
-    ),
-    'tokens' => array(
-        '82c4cb99-8440-41ef-a6a5-0e81d27b4c5f'
-    ),
-    'clients' => array(
-        'admin' => '48b29b48-cb98-4dab-8a72-69b17fed5b25',
-        'agent' => '12b61casdfa1-72b5-42aa-a8a0-e639d18ad4af'
-    ),
-    'redis' => array(
-        'host' => 'localhost',
-        'port' => 6379,
-        'persistent' => false,
-        'sessionkey' => 'pisess',
-        'dataexpiration' => 172800
-    ),
-    'authentication' => "jwt"
+    'hashkey' => 'iknowyouwantmeiknowyoucare',
+    'tokenEXP' => array(
+        'token' => '60 second',
+        'refreshToken' => '1 day'
+    )
+    // 'redis' => array(
+    //     'host' => 'localhost',
+    //     'port' => 6379,
+    //     'persistent' => false,
+    //     'sessionkey' => 'redissess',
+    //     'dataexpiration' => 172800
+    // )
 );
-return $settings;
 ```
 
 
