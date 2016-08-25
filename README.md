@@ -22,10 +22,8 @@ http://www.thebuzzmedia.com/designing-a-secure-rest-api-without-oauth-authentica
 Requirements
 ---------
 -PHP 5.4 above until 7
--Phalcon 2 until 3
+-Phalconphp 2 until 3
 -PDO-MySQL
--OpenSSL
--make
 
 Configuration (Database, URL's, Redis and Others)
 --------------
