@@ -108,6 +108,7 @@ class User{
         $payload['iat'] = $timestamp;
         $payload['exp'] = strtotime('+' . $this->di['config']['tokenEXP']['token'], $timestamp);
 
+
         $accesstoken = \Firebase\JWT\JWT::encode($payload, $this->di['config']['hashkey']);
         $rtoken = \Firebase\JWT\JWT::encode(array(
             "id" => $payload["id"],
@@ -128,7 +129,7 @@ class User{
      */
     public function getAccountType($name)
     {
-
+        
     }
 
     /**

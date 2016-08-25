@@ -1,29 +1,21 @@
 <?php
 
-/**
- * Event that check JWT Authentication
- *
- * @package Events
- * @subpackage Api
- * @author Jete O'Keeffe
- * @version 1.0
- */
-
 namespace PhalconRestJWT\Events;
 
 use Security\AclRoles;
-class Acl extends \Phalcon\Events\Manager implements IEvent {
 
-    public function __construct() {
-        // Add Event to validate message
-        //$this->handleEvent();
-    }
+/**
+ * Class Acl
+ * @package PhalconRestJWT
+ */
+
+class Acl extends \Phalcon\Events\Manager implements IEvent {
 
     /**
      * Setup an Event
      *
-     * Phalcon event to make sure client sends a valid message
-     * @return FALSE|void
+     * Phalcon event to be attached to the micro
+     * @return void
      */
     public function beforeExecuteRoute($event, $app) {
 
@@ -47,6 +39,5 @@ class Acl extends \Phalcon\Events\Manager implements IEvent {
             );
 
         }
-
     }
 }

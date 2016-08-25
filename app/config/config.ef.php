@@ -20,7 +20,7 @@ $settings = array(
     ),
     'hashkey' => 'iknowyouwantmeiknowyoucare',
     'tokenEXP' => array(
-        'token' => '60 second',
+        'token' => '30 second',
         'refreshToken' => '1 day'
     )
     // 'redis' => array(

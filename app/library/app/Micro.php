@@ -1,19 +1,14 @@
 <?php
 
-/**
- * A Micro application to run simple/rest based applications
- *
- * @package Application
- * @author Jete O'Keeffe
- * @version 1.0
- * @link http://docs.phalconphp.com/en/latest/reference/micro.html
- * @example
- */
-
 namespace PhalconRestJWT\App;
 
-use PhalconRestJWT\Http\Response,
-PhalconRestJWT\Exceptions\Http;
+use PhalconRestJWT\Http\Response;
+use PhalconRestJWT\Exceptions\Http;
+
+/**
+ * Class Micro
+ * @package PhalconRestJWT
+ */
 
 class Micro extends \Phalcon\Mvc\Micro {
 
@@ -23,59 +18,54 @@ class Micro extends \Phalcon\Mvc\Micro {
 	 */
 	protected $_noAuthPages;
 
-	/**`
-	 * User level access
+	/**
+	 * Micro Collection Routes
 	 * @var array
 	 */
-
-	protected $_levels;
-
-	/**
-	 * APP PATH VALUE
-	 */
-
-	public $appDir;
+	protected $_collections;
 
 	/**
 	 * Constructor of the App
 	 */
-	protected $_collections;
-
 	public function __construct() {
 		$this->_noAuthPages = array();
-		$this->_levels = array();
 	}
 
 	/**
-     * Route Loader
-     */
-    private function routeLoader(){
-        $collections = array();
+	 * Mount route that is only needed.
+	 *
+	 * @return void It only load the needed route
+	 */
+    private function routeLoader() {
         $collectionFiles = scandir(ROUTES_DIR);
-        foreach($collectionFiles as $collectionFile){
+
+        foreach ($collectionFiles as $collectionFile) {
             $pathinfo = pathinfo($collectionFile);
+            
             //Only include php files
-            if($pathinfo['extension'] === 'php'){
+            if ($pathinfo['extension'] === 'php') {
                 // The collection files return their collection objects, so mount
                 // them directly into the router.
-
             	$route = include(ROUTES_DIR.'/'.$collectionFile);
-            	if(preg_match("/^".str_replace('/', '\/', $route['prefix'])."\//i", $_SERVER['REQUEST_URI'])){
 
-            		$collections[] = $this->microCollection($route);
+            	if (preg_match("/^".str_replace('/', '\/', $route['prefix'])."\//i", $_SERVER['REQUEST_URI'])) {
+            		$this->collections[] = $this->microCollection($route);
             		break;
             	}
             }	
         }
 
-		foreach($collections as $collection){
+		foreach ($this->collections as $collection) {
 			$this->mount($collection);
 		}
 
     }
-    /**
-     * Micro Collection
-     */
+
+	/**
+	 * Generate Micro Collections before mounting
+	 *
+	 * @return \Phalcon\Mvc\Micro\Collection
+	 */
     private function microCollection($route){
         $col = new \Phalcon\Mvc\Micro\Collection();
         $col
@@ -85,55 +75,67 @@ class Micro extends \Phalcon\Mvc\Micro {
             ->setHandler($route['handler'])
             ->setLazy($route['lazy']);
 
-        foreach($route['collection'] as $r){
-        	$getRoute = preg_split("/^".str_replace('/', '\/', $route['prefix'])."\//i", $_SERVER['REQUEST_URI']);
-        	if(!empty($getRoute)){
-        		if( '/'.$getRoute[1] === $r['route']) {
+        foreach ($route['collection'] as $r) {
+        	$getRoute = preg_split(
+	        		"/^".
+	        		str_replace('/', '\/', $route['prefix'])."\//i", 
+	        		$_SERVER['REQUEST_URI']
+        		);
+        	
+        	if (!empty($getRoute)) {
+        		if ( '/'.$getRoute[1] === $r['route']) {
 		            //Store unauthenticated Collection
-		            if($r['authentication']===false){
+		            if ($r['authentication']===false) {
 		                $method = strtolower($r['method']);
+
 		                if (! isset($this->_noAuthPages[$method])) {
 		                    $this->_noAuthPages[$method] = array();
 		                }
+
 		                $this->_noAuthPages[$method][] = $route['prefix'].$r['route'];
 		            }
-		            $col->{$r['method']}($r['route'], $r['function'], isset($r['resource']) ? $r['resource']:NULL);
+
+		            $col->{$r['method']}(
+			            	$r['route'], 
+			            	$r['function'], 
+			            	isset($r['resource']) ? $r['resource']:NULL
+		            	);
+
 		            break;
         		}
         	}
-
         }
 
         return $col;
     }
+
+	/**
+	 * Get collections
+	 *
+	 * @return \Phalcon\Mvc\Micro\Collection
+	 */
     public function getCollections(){
         return $this->collections;
     }
+
+	/**
+	 * Get No Auth Pages
+	 *
+	 * @return Array
+	 */
     public function getNoAuthPages(){
         return $this->_noAuthPages;
     }
-	/**
-	 * 
-	 *
-	 *
-	 */
-	public function getUnauthenticated() {
-		return $this->_noAuthPages;
-	}
-	/**
-	 *
-	 */
-	public function getLevels() {
-		return $this->_levels;
-	}
+
 	/**
 	 * Main run block that executes the micro application
 	 *
 	 */
 	public function run() {
-
+		// Call route loader
 		$this->routeLoader();
 
+		// Send headers
 		$this->response->setHeader('Access-Control-Allow-Origin', '*');
 		$this->response->sendHeaders();
 
@@ -144,9 +146,7 @@ class Micro extends \Phalcon\Mvc\Micro {
 			$this->response->send();
 		}
 
-
 		$this->after(function(){
-
 			// Results returned from the route's controller.  All Controllers should return an array
 			$records = $this->getReturnedValue();
 
@@ -164,23 +164,19 @@ class Micro extends \Phalcon\Mvc\Micro {
 			$response->sendContent($records);
 			
 			return;
-
 		});
 
 		// Handle any routes not found
 		$this->notFound(function () {
-		        throw new Http(1030, 'Route not Found!',
-		            array(
-		                'dev' => "Url was not found.",
-		                'internalCode' => "Micro-2",
-		                'more' => null
-		            )
-		        );
+		    throw new Http(1030, 'Route not Found!',
+		        array(
+		            'dev' => "Url was not found.",
+		            'internalCode' => "Micro-2",
+		    	    'more' => null
+		        )
+		    );
 		});
 
 		$this->handle();
-
 	}
-
-
 }

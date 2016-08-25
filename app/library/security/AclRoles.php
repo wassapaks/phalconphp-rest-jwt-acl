@@ -1,23 +1,19 @@
 <?php
 
-/**
- * Event that check JWT Authentication
- *
- * @package Events
- * @subpackage Api
- * @author Jete O'Keeffe
- * @version 1.0
- */
-
 namespace PhalconRestJWT\Security;
 
 use \Phalcon\Acl\Adapter\Memory as AclList;
+
+/**
+ * Class AclRoles
+ * @package PhalconRestJWT
+ */
 class AclRoles {
 
     /**
-     * Setup an Event
-     *
-     * Phalcon event to make sure client sends a valid message
+     * Setup an ACL rules
+     * @param array $resources
+     * @param array $roles
      * @return FALSE|void
      */
     public static function setAcl($resources,$roles) {
@@ -29,9 +25,9 @@ class AclRoles {
 
         /*
          * ROLES
-         * Admin - can do anything
-         * User - can do most things
-         * Restricted User - read only
+         * Owner - can do anything
+         * Admin - can do most things
+         * Staff - rRestricted User
          * */
 
         foreach ($roles as $role) {
@@ -41,7 +37,8 @@ class AclRoles {
         /*
          * RESOURCES
          * for each user, specify the 'controller' and 'method' they have access to (user=>[controller=>[method,method]],...)
-         * this is created in an array as we later loop over this structure to assign users to resources
+         * this is created in an array as we later loop over this structure to assign users to resources,
+         * on each route you can assign a code like in the example R1, R2 in the routes example.
          * */
 
         foreach($resources as $arrResource){
@@ -79,6 +76,13 @@ class AclRoles {
 
     }
 
+    /**
+     * Get User ACL rules
+     * @param string $user
+     * @param string $activeHandler
+     * @param string $handler
+     * @return bollean
+     */
     public static function getAcl($user,$activeHandler, $handler){
         // Restore acl object from serialized file
         $acl = unserialize(file_get_contents(__DIR__."/acl.data"));
@@ -87,5 +91,4 @@ class AclRoles {
 
         return $allowed;
     }
-
 }

@@ -1,18 +1,27 @@
 <?php
 
-
-
 namespace PhalconRestJWT\App;
 
 use PhalconRestJWT\Http\Request;
 use PhalconRestJWT\Http\Response;
 use PhalconRestJWT\Constants\Services;
-use PhalconRestJWT\App\Router;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
 
+/**
+ * Class Di
+ * @package PhalconRestJWT
+ */
+
 class Di extends \Phalcon\Di\FactoryDefault {
 
+	/**
+	  * Set Shared dependencies
+	  *
+	  * @param Phalcon\Config $config Array structure from your config file.
+	  *
+	  * @return void
+	  */
 	public function __construct($config) {
 
 		parent::__construct();
@@ -24,7 +33,6 @@ class Di extends \Phalcon\Di\FactoryDefault {
 		$this->setShared(Services::CONFIG, $config);
 
         $this->setShared(Services::EVENTS_MANAGER, new EventsManager);
-
 
 	}
 }

@@ -2,6 +2,15 @@
 
 namespace PhalconRestJWT\Constants;
 
+/**
+ * Class ErrorCodes
+ *
+ * Constants Taken from Redound
+ *
+ *  https://github.com/redound/phalcon-rest-boilerplate
+ *
+ */
+
 class ErrorCodes
 {
     // General

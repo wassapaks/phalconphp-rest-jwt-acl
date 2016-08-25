@@ -1,16 +1,24 @@
 <?php
 namespace PhalconRestJWT\Http;
 
-use PhalconRestJWT\Constants\Services,
-    PhalconRestJWT\Exceptions\Http;
+use PhalconRestJWT\Constants\Services;
+use PhalconRestJWT\Exceptions\Http;
+
+/**
+ * Class Response
+ * @package PhalconRestJWT
+ */
 
 class Response extends \Phalcon\Http\Response{
 
-    protected $snake = true;
-
-    protected $envelope = true;
-
-
+    /**
+     * Envelopes $records / erros and send as JSON
+     *
+     * @param array $records
+     * @param bolean $error
+     *
+     * @return json
+     */
     public function sendContent($records, $error=false){
 
         $status = 'success';
@@ -61,6 +69,13 @@ class Response extends \Phalcon\Http\Response{
 
     }
 
+    /**
+     * Get description base from code
+     *
+     * @param int $cord
+     *
+     * @return array
+     */
     protected function getResponseDescription($code)
     {
         $codes = array(

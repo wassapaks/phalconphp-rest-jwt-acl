@@ -2,14 +2,30 @@
 
 namespace PhalconRestJWT\Bootstrap;
 
-use PhalconRestJWT\Constants\Services,
-	PhalconRestJWT\Interfaces\IBootstrap,
-	Phalcon\DiInterface,
-	PhalconRestJWT\App\Micro,
-	App\Services\User;
 
+use PhalconRestJWT\Constants\Services;
+use	PhalconRestJWT\Interfaces\IBootstrap;
+use	Phalcon\DiInterface;
+use	PhalconRestJWT\App\Micro;
+use	App\Services\User;
+
+/**
+ * Class ServiceBootstrap
+ * @package PhalconRestJWT
+ */
 class ServiceBootstrap implements IBootstrap
 {
+
+    /**
+      * Set Shared dependencies from bootstrap folder, when you add additional helpers or 
+      * services just create a folder and add a bootstrap loader for your files in the bootstrap file
+      *
+      * @param PhalconRestJWT\App\Micro $app Array structure from your config file.
+      * @param Phalcon\DiInterface $di Array structure from your config file.
+      * @param PhalconRestJWT\App\Config $config Array structure from your config file.
+      *
+      * @return void
+      */
     public function boot(Micro $app, DiInterface $di, $config)
     {
 
@@ -28,7 +44,6 @@ class ServiceBootstrap implements IBootstrap
             $connection = new \Phalcon\Db\Adapter\Pdo\Mysql($creds);
 
             // Assign the eventsManager to the db adapter instance
-
             $connection->setEventsManager($this->get(Services::EVENTS_MANAGER));
 
             return $connection;

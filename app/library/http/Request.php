@@ -2,6 +2,15 @@
 
 namespace PhalconRestJWT\Http;
 
+/**
+ * Class Request
+ *
+ * Constants Taken from Redound
+ *
+ *  https://github.com/redound/phalcon-rest-boilerplate
+ *
+ */
+
 class Request extends \Phalcon\Http\Request{
     protected $postedDataMethod = "POST";
 

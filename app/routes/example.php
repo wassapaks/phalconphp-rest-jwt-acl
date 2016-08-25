@@ -30,7 +30,7 @@ return [
             'method' => 'get',
             'route' => '/samplenewnew',
             'function' => 'newnewsample',
-            'authentication' => FALSE,
+            'authentication' => TRUE,
             'resource' => 'rl1'
         ],
         [

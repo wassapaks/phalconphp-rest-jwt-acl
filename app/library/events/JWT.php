@@ -7,16 +7,23 @@ use Phalcon\DiInterface;
 use PhalconRestJWT\App\Micro;
 use PhalconRestJWT\Interfaces\IEvents;
 use PhalconRestJWT\Constants\Services;
+use PhalconRestJWT\Exceptions\Http;
+
+/**
+ * Class JWT
+ * @package PhalconRestJWT
+ */
+
 class JWT extends \Phalcon\Events\Manager implements IEvents{
 
     /**
-     * Hmac Message
-     * @var object
+     * Token from Header
+     * @var string
      */
     protected $_token;
 
     /**
-     * Private key for HMAC
+     * Private key for crypting and decrypting token, set on the config file
      * @var string
      */
     protected $_privateKey;
@@ -25,6 +32,10 @@ class JWT extends \Phalcon\Events\Manager implements IEvents{
         $this->_privateKey = $config->hashkey;
     }
 
+    /**
+     * Attach to micro event
+     * @return string token
+     */
     public function beforeExecuteRoute($event,$app) {
         
         $request = $app->getDi()->get(Services::REQUEST);
@@ -39,39 +50,35 @@ class JWT extends \Phalcon\Events\Manager implements IEvents{
                  return true;
              }
         }
-        // End of checking unAuthenticated
 
         // Start of JWT Authentication
         // Authenticating the Token If expired or something is wrong in decoding
+        if (!$request->getHeader('Authorization')) {
+            throw new Http(2020, 'Unauthorized.',
+                array(
+                    'dev' => "No headers found.",
+                    'internalCode' => "JWT-1",
+                    'more' => null
+                )
+            );
+        }
 
+        $parsetoken = explode(" ",$request->getHeader('Authorization'));
 
-        // if($request->getHeader('Authorization')){
+        $token = \Firebase\JWT\JWT::decode($parsetoken[1], $this->_privateKey, array('HS256'));
 
-        // }
-
-        // $parsetoken = explode(" ",$request->getHeader('Authorization'));
-
-
-
-        $token = \Firebase\JWT\JWT::decode($request->getHeader('Authorization'), $this->_privateKey, array('HS256'));
-
-        if($token){
-            die("returned token");
-            //$app->getDi()->get('User')->setUser($token);
+        if ($token) {
             return $token;
         }
 
-        die("should be error");
-        // // End of JWT Authentication
-        // throw new \Micro\Exceptions\HTTPExceptions(
-        //     'Unauthorized Access',
-        //     401,
-        //     array(
-        //         'dev' => 'Accessing this route is not permitted.',
-        //         'internalCode' => 'NF5000',
-        //         'more' => 'Pass a correct token.'
-        //     )
-        // );
+        // throw exception if reaches this part
+        throw new Http(2020, 'Unauthorized.',
+            array(
+                'dev' => "End of Authentication, passed back error.",
+                'internalCode' => "JWT-2",
+                'more' => null
+            )
+        );
 
     }
 }

@@ -5,8 +5,7 @@ namespace App\Controllers;
 use App\Models\Members,
     PhalconRestJWT\Exceptions\Http;
 
-class ExampleController extends ControllerBase{
-
+class ExampleController extends \Phalcon\Controllers{
 
     public function newnewsample(){
 
@@ -18,9 +17,9 @@ class ExampleController extends ControllerBase{
         //     )
         // );
         
-        // $res = Members::find();
-        // $res->toArray();
-        return array();
+        $res = Members::find();
+        $data = $res->toArray();
+        return $data;
     }
 
 	public function pingAction() {

@@ -4,18 +4,36 @@ namespace PhalconRestJWT\Exceptions;
 use PhalconRestJWT\Constants\ErrorCodes;
 use PhalconRestJWT\Http\Response;
 
+/**
+ * Class Http
+ * @package PhalconRestJWT
+ */
+
 class Http extends \Exception{
 	
+    /**
+     * Developer Error Message
+     * @var string
+     */
+
 	public $devMessage;
 	
+    /**
+     * Error Header Code
+     * @var string
+     */
 	public $errorCode;
-	
-	public $response;
-	
-	public $additionalInfo;
 
-	public $error;
+    /**
+     * Error Reports from Message and Dev
+     * @var array
+     */
+	private $error;
 
+    /**
+     * Error Codes
+     * @var array
+     */
     protected $errors = [
 
         // General
@@ -88,6 +106,16 @@ class Http extends \Exception{
         ]
     ];
 
+    /**
+     * Constructor recieves parameters and passed on to the Response Class
+     *
+     * @param array $code
+     * @param string $message
+     * @param array $devError
+     *
+     * @return void
+     *
+     */
 	public function __construct($code, $message, $devError){
 
 		$code = !isset($this->errors[$code]) ? 1010 : $code;
@@ -97,12 +125,17 @@ class Http extends \Exception{
 		);
 
 		$this->error['errorMessage'] = $message;
-		$this->error['errorDev'] = $devError	;
+		$this->error['errorDev'] = $devError;
 
-		//Save error to custom log file
-
+		// Put Save error to custom log file
 	}
 
+    /**
+     * Get compiled error
+     *
+     * @return array
+     *
+     */
 	public function getError(){
 		return $this->error;
 	}

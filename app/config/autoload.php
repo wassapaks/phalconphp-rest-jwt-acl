@@ -1,10 +1,20 @@
 <?php
 
 /**
- * Auto Load Class files by namespace
+ * Auto Load file from Config
  *
- * @eg
-'namespace' => '/path/to/dir'
+ * @example 
+ * 	$autoload = [
+ *		'Namespaces' => [
+ *			'App\Controllers' => APP_DIR . '/controllers/',
+ *			'App\Models' => APP_DIR . '/models/',
+ *			'App\Security' => APP_DIR . '/security/',
+ *			'App\Services' => APP_DIR . '/services/'
+ *		],
+ *		'Dirs' => [
+ *			
+ *		]
+ *	];
  */
 
 $autoload = [
