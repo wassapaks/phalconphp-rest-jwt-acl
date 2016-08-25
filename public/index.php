@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(1);
+ini_set('display_errors',1); 
+
 /** @var \Phalcon\Config $config */
 $config = null;
 
@@ -103,7 +106,7 @@ try {
     $events->run($app);
 
     // Bootstrap components
-    $bootstrap = new PhalconRestJWT\Bootstrap(
+    $bootstrap = new PhalconRestJWT\App\Bootstrap(
         new PhalconRestJWT\Bootstrap\ServiceBootstrap()
     );
 
@@ -114,34 +117,37 @@ try {
     $app->run();
 
 } catch (\Exception $e) {
+    // Handle exceptions
+    $di = $app && $app->di ? $app->di : new PhalconRestJWT\Di\FactoryDefault();
 
-        // Handle exceptions
-        $di = $app && $app->di ? $app->di : new PhalconRestJWT\Di\FactoryDefault();
-        $response = $di->getShared(PhalconRestJWT\Constants\Services::RESPONSE);
-        if (!$response || !$response instanceof PhalconRestJWT\Http\Response) {
-            $response = new PhalconRestJWT\Http\Response();
-        }
+    $response = $di->getShared(PhalconRestJWT\Constants\Services::RESPONSE);
 
-        // Catch Exception, from JWT or from HTTP class
-        if ($e instanceof PhalconRestJWT\Exceptions\Http) {
-            $response->sendContent($e->getError(), true);
-        } elseif ( 
-            $e instanceof UnexpectedValueException || 
-            $e instanceof ExpiredException || 
-            $e instanceof InvalidArgumentException || 
-            $e instanceof DomainException || 
-            $e instanceof SignatureInvalidException || 
-            $e instanceof BeforeValidException
-        ) {
-            $error = array(
-                "ApiStatus" => 401,
-                "errorMessage" => "Unauthorized",
-                "errorDev" => array(
-                    'dev' => $e->getMessage(),
-                    'internalCode' => "Micro - 2",
-                    'more' => null
-                    )
-                );
-            $response->sendContent($error, true);
-        }
-}
+    if (!$response || !$response instanceof PhalconRestJWT\Http\Response) {
+        $response = new PhalconRestJWT\Http\Response();
+    }
+
+    // Catch Exception, from JWT or from HTTP class
+    if ($e instanceof PhalconRestJWT\Exceptions\Http) {
+        $error = $e->getError();
+    } elseif ( 
+        $e instanceof UnexpectedValueException || 
+        $e instanceof ExpiredException || 
+        $e instanceof InvalidArgumentException || 
+        $e instanceof DomainException || 
+        $e instanceof SignatureInvalidException || 
+        $e instanceof BeforeValidException
+    ) {
+        $error = array(
+            "ApiStatus" => 401,
+            "errorMessage" => "Unauthorized",
+            "errorDev" => array(
+                'dev' => $e->getMessage(),
+                'internalCode' => "Micro - 2",
+                'more' => null
+                )
+            );
+    }else{
+        $error = $e->getMessage();
+    }
+    $response->sendContent($error, true);
+} 

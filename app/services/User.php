@@ -1,37 +1,62 @@
 <?php
 
-/**
- * Event that check JWT Authentication
- *
- * @package Events
- * @subpackage Api
- * @author Jete O'Keeffe
- * @version 1.0
- */
-
 namespace App\Services;
 
-use PhalconRestJWT\App\Micro,
-    Phalcon\DiInterface,
-    PhalconRestJWT\Exceptions\Http;
 
+use Phalcon\DiInterface;
+use PhalconRestJWT\Exceptions\Http;
+
+/**
+ * Class User Service
+ * @package PhalconRestJWT
+ */
 class User{
 
+    /**
+     * User array information
+     *
+     * @var array
+     */
     protected $user = [];
 
+    /**
+     * User table map
+     *
+     * @var string
+     */
     protected $table = null;
 
-    protected $app;
+    /**
+     * Di
+     *
+     * @var Phalcon\DiInterface
+     */
+    protected $di;
 
+    /**
+     * Initialize DI in Class
+     *
+     * @param Phalcon\DiInterface $di
+     *
+     * @return void
+     */
     public function __construct($di){
         $this->di = $di;
     }
 
+    /**
+     *
+     * @return array user information
+     */
     public function getUser()
     {
         return $this->user;
     }
 
+    /**
+     *
+     * @param array user set information
+     */
     public function setUser($user)
     {
         $this->user = $user;
@@ -64,10 +89,10 @@ class User{
         return $rec;
     }
 
-    protected function getDetailsForIdentity($identity)
-    {
-
-    }
+    /**
+     * @return array Authorized user and set token
+     *
+     */
 
     public function authorizeUser($cred, $table, $refresh = false)
     {
@@ -102,6 +127,10 @@ class User{
         return $data;
     }
 
+    /**
+     * @return string set of token
+     *
+     */
     public function genToken($payload){
 
         $timestamp = time();
@@ -120,26 +149,5 @@ class User{
             'token' => $accesstoken,
             'refreshtoken' => $rtoken
         );
-    }
-
-    /**
-     * @param $name
-     *
-     * @return \PhalconRest\Auth\AccountType Account-type
-     */
-    public function getAccountType($name)
-    {
-        
-    }
-
-    /**
-     * @param string $token Token to authenticate with
-     *
-     * @return bool
-     * @throws Exception
-     */
-    public function authenticateToken($token)
-    {
-
     }
 }

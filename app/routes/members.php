@@ -1,28 +1,25 @@
 <?php
 
 /**
- * @author GEEKSNEST
- * @version 1.0
- * @link http://docs.phalconphp.com/en/latest/reference/micro.html#defining-routes
- * @eg.
-
-return [
-    "prefix" => "/v1/example",
-    "handler" => 'Controllers\ExampleController',
-    "lazy" => true,
-    "collection" => [
-        [
-            'method' => 'get',
-            'route' => '/ping',
-            'function' => 'pingAction',
-            'authentication' => FALSE,
-            'resource' => 'rl1' // OPTIONAL if Authentication is True
-        ]
-    ]
-];
-
+ *
+ *  Route template configuration
+ *
+ * return [
+ *    "prefix" => "/v1/example",
+ *   "handler" => 'Controllers\ExampleController',
+ *   "lazy" => true,
+ *   "collection" => [
+ *       [
+ *           'method' => 'get',
+ *           'route' => '/ping',
+ *           'function' => 'pingAction',
+ *           'authentication' => FALSE,
+ *           'resource' => 'rl1' // OPTIONAL if Authentication is True
+ *       ]
+ *   ]
+ * ];
+ *
  */
-
 return [
     "prefix" => "/members",
     "handler" => 'App\Controllers\MembersController',
@@ -32,7 +29,7 @@ return [
             'method' => 'post',
             'route' => '/checkusername',
             'function' => 'checkusername',
-            'authentication' => TRUE,
+            'authentication' => true,
             'resource' => 'rl1'
         ],
         [

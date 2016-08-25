@@ -49,13 +49,13 @@ class Micro extends \Phalcon\Mvc\Micro {
             	$route = include(ROUTES_DIR.'/'.$collectionFile);
 
             	if (preg_match("/^".str_replace('/', '\/', $route['prefix'])."\//i", $_SERVER['REQUEST_URI'])) {
-            		$this->collections[] = $this->microCollection($route);
+            		$this->_collections[] = $this->microCollection($route);
             		break;
             	}
             }	
         }
 
-		foreach ($this->collections as $collection) {
+		foreach ($this->_collections as $collection) {
 			$this->mount($collection);
 		}
 
@@ -115,7 +115,7 @@ class Micro extends \Phalcon\Mvc\Micro {
 	 * @return \Phalcon\Mvc\Micro\Collection
 	 */
     public function getCollections(){
-        return $this->collections;
+        return $this->_collections;
     }
 
 	/**
@@ -123,7 +123,7 @@ class Micro extends \Phalcon\Mvc\Micro {
 	 *
 	 * @return Array
 	 */
-    public function getNoAuthPages(){
+    public function getUnauthenticated(){
         return $this->_noAuthPages;
     }
 
@@ -132,6 +132,7 @@ class Micro extends \Phalcon\Mvc\Micro {
 	 *
 	 */
 	public function run() {
+
 		// Call route loader
 		$this->routeLoader();
 
@@ -147,6 +148,7 @@ class Micro extends \Phalcon\Mvc\Micro {
 		}
 
 		$this->after(function(){
+
 			// Results returned from the route's controller.  All Controllers should return an array
 			$records = $this->getReturnedValue();
 

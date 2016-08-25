@@ -66,7 +66,6 @@ class Response extends \Phalcon\Http\Response{
         $this->setEtag($etag);
         $this->setJsonContent($res);
         $this->send();
-
     }
 
     /**

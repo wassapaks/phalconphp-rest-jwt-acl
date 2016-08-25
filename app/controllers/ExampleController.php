@@ -5,10 +5,10 @@ namespace App\Controllers;
 use App\Models\Members,
     PhalconRestJWT\Exceptions\Http;
 
-class ExampleController extends \Phalcon\Controllers{
+class ExampleController extends \Phalcon\Mvc\Controller {
 
     public function newnewsample(){
-
+        
         // throw new Http(1010, 'Something went Wrong',
         //     array(
         //         'dev' => "adsfadsfadsf",
