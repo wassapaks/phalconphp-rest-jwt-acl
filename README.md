@@ -84,14 +84,8 @@ Database Migration
 
 When you want to migrate database only use the following command:
 
-```bash
-bash migratesql.sh <migrate-sql / init-only / sqlcommand-only>
-```
-
-To backup your database before executing the sql commands
-
-```bash
-bash migratesql.sh sqldump
+```bash 
+bash migratesql.sh <host> <username> <password> <type> <databasename>
 ```
 
 Routes
@@ -147,85 +141,8 @@ curl
 Server Test
 -------------
 
-With `PHP 5.4`, you can use its builtin web server to quickly test functionality. Make sure to be in the public directory when executing the command below.
-
-```bash
-cd apign/public
-php -S localhost:8000 ../.htrouter.php
-```
-
-Swagger Documentation
--------------
-Swagger Document head can be found on `app/config/routes.php`
-
-To add swagger documentation is to add a comment head before your api controller function
-
-Ex GET:
-```php
-    /**
-     * @SWG\Get(
-     *     path="/authenticate/get",
-     *     summary="Get Authentication",
-     *     tags={"Authentication"},
-     *     description="Description all",
-     *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="Authorization",
-     *         in="header",
-     *         description="Check if your bearer token is still valid",
-     *         required=true,
-     *         type="string"
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation"
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Invalid tag value",
-     *     )
-     * )
-     *
-     */
-```
-
-Ex POST:
-```php
-/**
-     * @SWG\Post(
-     *     path="/agent/login",
-     *     summary="Agent Login",
-     *     tags={"Agent"},
-     *     description="Login Agent and return token",
-     *     consumes={"application/json"},
-     *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Login Credentials",
-     *         required=true,
-     *         @SWG\Schema(ref="#/definitions/AgentLogin")
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation"
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Invalid tag value"
-     *     )
-     * )
-     *
-     * @SWG\Definition(
-     *      definition="AgentLogin",
-     *      @SWG\Property(property="email", type="string"),
-     *      @SWG\Property(property="password", type="string"),
-     * )
-     */
-```
 
 Next Release
 -------------
 
-- automatic nginx configuration using robo
 - automatic database compare and update using FROM database and TO database
