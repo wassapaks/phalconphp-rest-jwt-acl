@@ -20,7 +20,7 @@ function appError($message){
 try {
 
     //Constant Values will be used for the entire project
-    define('APP_ENV', getenv('APP_ENV') ?: 'dev');
+    define('APP_ENV', getenv('APP_ENV') ?: 'ef');
     define('NAMESPACE_PREFIX', 'PhalconRestJWT');
 
     define("ROOT_DIR", __DIR__ . '/..');
