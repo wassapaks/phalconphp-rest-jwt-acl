@@ -6,48 +6,29 @@
 
 $settings = array(
     'database' => array(
-        'adapter' => 'Mysql',	/* Possible Values: Mysql, Postgres, Sqlite */
+        'adapter' => 'Mysql',   /* Possible Values: Mysql, Postgres, Sqlite */
         'host' => 'localhost',
         'username' => 'root',
-        'password' => 'SpIVTldLzc',
-        'name' => 'dbhcare',
+        'password' => 'adminadmin123',
+        'name' => 'phalconrestjwt',
         'port' => 3306
     ),
     'application' => array(
-        'baseURL' => 'http://162.243.227.58',
-        'apiURL' => 'http://162.243.227.58:3000',
+        'apiURL' => 'http://prodapi',
+        'env' => 'prod' /* dev or prod */
     ),
-    'hashkey' => '4a478258bd8e11f4046d6fe49471401893d69469',
+    'hashkey' => 'iknowyouwantmeiknowyoucare',
     'tokenEXP' => array(
-        'token' => '60 second',
+        'token' => '30 second',
         'refreshToken' => '1 day'
-    ),
-    'postmark' => array(
-        'url' => 'https://api.postmarkapp.com/email',
-        'token' => '016e0c8c-d974-491f-b17d-f9c89915ec0a',
-        'signature' => 'contact@geeksnest.com'
-    ),
-    'tokens' => array(
-        '82c4cb99-8440-41ef-a6a5-0e81d27b4c5f'
-    ),
-    'clients' => array(
-        'admin' => '48b29b48-cb98-4dab-8a72-69b17fed5b25',
-        'user' => '12b61fa1-72b5-42aa-a8a0-e639d18ad4af'
-    ),
-    'redis' => array(
-        'host' => 'localhost',
-        'port' => 6379,
-        'persistent' => false,
-        'sessionkey' => 'pisess',
-        'dataexpiration' => 172800
-    ),
-    'amazonS3' => array(
-        'awsAccessKey' => 'AKIAIR3YQHCUALZNBRCA',
-        'awsSecretKey' => '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',
-        'bucket' => 'planetimpossible',
-        'region' => 'us-west-2'
     )
+    // 'redis' => array(
+    //     'host' => 'localhost',
+    //     'port' => 6379,
+    //     'persistent' => false,
+    //     'sessionkey' => 'pisess',
+    //     'dataexpiration' => 172800
+    // )
 );
-
 
 return $settings;

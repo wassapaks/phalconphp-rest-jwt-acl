@@ -5,6 +5,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 
+
 printf "${RED}========================================================= \n"
 printf "Bash Execute SQL Files \n"
 printf "Author: Ef \n"
@@ -12,7 +13,6 @@ printf "Ver=0.1 \n"
 printf "=========================================================${NC} \n"
 
 FILES=dist/sql/*
-
 
 function execute {
       printf "=========================================================\n"

@@ -28,6 +28,13 @@ class Response extends \Phalcon\Http\Response{
             'data'      => null,
             'message'   => null
         ];
+        if( isset($records['ApiStatus']) ) {
+            $this->setStatusCode(
+                $records['ApiStatus'], 
+                $this->getResponseDescription($records['ApiStatus'])
+            );
+            unset($records['ApiStatus']);
+        }
 
         // Error's come from HTTPException.  This helps set the proper envelope data
         if($error){
@@ -45,17 +52,9 @@ class Response extends \Phalcon\Http\Response{
             
             $status="error";
             $res['message'] = $records['errorMessage'];
-            $res['data'] = $records;
+            $res['error'] = $records;
         }else{
             $res['data'] = $records;
-        }
-
-        if( isset($records['ApiStatus']) ) {
-            $this->setStatusCode(
-                $records['ApiStatus'], 
-                $this->getResponseDescription($records['ApiStatus'])
-            );
-            unset($records['ApiStatus']);
         }
 
         $etag = md5(serialize($records));

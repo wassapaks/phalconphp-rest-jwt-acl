@@ -1,8 +1,5 @@
 <?php
 
-error_reporting(1);
-ini_set('display_errors',1); 
-
 /** @var \Phalcon\Config $config */
 $config = null;
 
@@ -23,7 +20,7 @@ function appError($message){
 try {
 
     //Constant Values will be used for the entire project
-    define('APP_ENV', getenv('APP_ENV') ?: 'ef');
+    define('APP_ENV', getenv('APP_ENV') ?: 'dev');
     define('NAMESPACE_PREFIX', 'PhalconRestJWT');
 
     define("ROOT_DIR", __DIR__ . '/..');
