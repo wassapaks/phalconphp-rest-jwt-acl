@@ -65,31 +65,19 @@ $settings = array(
 Setup and Installation
 --------------
 
-Install ROBO in your system. ( http://robo.li/ )
+If you are in Linux or Mac run the setup.sh by passing your config name in used in the <your-desired-name>
+
+Example:
 
 ```bash
-robo setup <dev / prod> <migrate-sql / init-only / sqlcommand-only>
+bash setup.sh ef
 ```
 
-- Parameter 1 <dev / prod>
+You can setup it manually:
 
-Use the name after dash (-) like config-dev.php use "dev"
-
-- Parameter 2 <migrate-sql / init-only / sqlcommand-only>
-
-migrate-sql - executes init.sql and all sql files
-
-init-only - executes ini.sql only (initial database creation)
-
-sql-commands-only - executes sql files except init.sql
-
-if no parameter 2 means database has already been setup
-
-EX:
-
-```bash
-robo setup prod init-only
-```
+1. by copying your configuration in dist/config into the app/config
+2. change the value of the APP_ENV in the public/index.php to youre-desired-name in your config filename
+3. create a cache folder in app because it is being ignored by .gitignore
 
 Database Migration
 -------------
@@ -97,13 +85,13 @@ Database Migration
 When you want to migrate database only use the following command:
 
 ```bash
-robo sqlexec <migrate-sql / init-only / sqlcommand-only>
+bash migratesql.sh <migrate-sql / init-only / sqlcommand-only>
 ```
 
 To backup your database before executing the sql commands
 
 ```bash
-robo sqldump
+bash migratesql.sh sqldump
 ```
 
 Routes
