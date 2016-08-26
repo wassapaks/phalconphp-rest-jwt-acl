@@ -59,3 +59,10 @@ printf "${GREEN} $copyconfig has been copied ... ${NC} \n\n"
 
 sed -i "/define('APP_ENV'/c\    define('APP_ENV', getenv('APP_ENV') ?: '$1');" public/index.php
 printf "${GREEN} APP_ENV has been changed in public/index.php ... ${NC} \n\n"
+
+
+printf "${GREEN}---------- Executing Composer Install ${NC} \n"
+composer install
+
+printf "${GREEN}---------- Creating Cache Folder ${NC} \n"
+sudo mkdir app/cache
