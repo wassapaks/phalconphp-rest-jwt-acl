@@ -145,4 +145,5 @@ Server Test
 Next Release
 -------------
 
-- automatic database compare and update using FROM database and TO database
+- fixing ACL
+- applying multiple assignment to a single route
