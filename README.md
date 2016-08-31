@@ -32,33 +32,37 @@ Open  `/app/config/` and and create your own config.<your-desired-name>.php setu
 Change the env ```env => 'dev'``` to prod when your on the production server.
 
 ```php
-$settings = array(
-    'database' => array(
-        'adapter' => 'Mysql',   /* Possible Values: Mysql, Postgres, Sqlite */
-        'host' => 'localhost',
-        'username' => 'root',
-        'password' => 'adminadmin123',
-        'name' => 'dbsample',
-        'port' => 3306
-    ),
-    'application' => array(
-        'baseURL' => 'http://youreSITEipordomain',
-        'apiURL' => 'http://youreRESTipordomain',
-        'env' => 'dev' /* dev or prod */
-    ),
-    'hashkey' => 'iknowyouwantmeiknowyoucare',
-    'tokenEXP' => array(
-        'token' => '60 second',
-        'refreshToken' => '1 day'
-    )
-    // 'redis' => array(
-    //     'host' => 'localhost',
-    //     'port' => 6379,
-    //     'persistent' => false,
-    //     'sessionkey' => 'redissess',
-    //     'dataexpiration' => 172800
-    // )
-);
+return [
+    "prefix" => "/v1/example",
+    "handler" => 'App\Controllers\ExampleController',
+    "lazy" => true,
+    "collection" => [
+        "/samplenewnew" => [
+            'method' => 'get',
+            'function' => 'newnewsample',
+            'authentication' => true,
+            'resource' => ['rl1', 'rl2']
+        ],
+        "/ping" => [
+            'method' => 'get',
+            'function' => 'pingAction',
+            'authentication' => false,
+            'resource' => 'rl1'
+        ],
+        "/test/{id}" => [
+            'method' => 'post',
+            'function' => 'testAction',
+            'authentication' => false,
+            'resource' => 'rl1'
+        ],
+        "/auth/test/{name}" => [
+            'method' => 'post',
+            'function' => 'testAuth',
+            'authentication' => false,
+            'resource' => 'rl1'
+        ],
+    ]
+];
 ```
 
 
