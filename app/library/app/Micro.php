@@ -38,6 +38,7 @@ class Micro extends \Phalcon\Mvc\Micro {
 	 */
     private function routeLoader() {
         $collectionFiles = scandir(ROUTES_DIR);
+        $col = new \Phalcon\Mvc\Micro\Collection();
 
         foreach ($collectionFiles as $collectionFile) {
             $pathinfo = pathinfo($collectionFile);
@@ -49,66 +50,43 @@ class Micro extends \Phalcon\Mvc\Micro {
             	$route = include(ROUTES_DIR.'/'.$collectionFile);
 
             	if (preg_match("/^".str_replace('/', '\/', $route['prefix'])."\//i", $_SERVER['REQUEST_URI'])) {
-            		$this->_collections[] = $this->microCollection($route);
-            		break;
-            	}
-            }	
-        }
+            		$this->_collections[] = $route;
 
-		foreach ($this->_collections as $collection) {
-			$this->mount($collection);
-		}
+		        	$col
+		            // VERSION NUMBER SHOULD BE FIRST URL PARAMETER, ALWAYS
+		            ->setPrefix($route['prefix'])
+		            // Must be a string in order to support lazy loading
+		            ->setHandler($route['handler'])
+		            ->setLazy($route['lazy']);
 
+				    foreach ($route['collection'] as $v => $r) {
+				    			if(!isset($r['authentication']))
+				    				$r['authentication']=false;
+
+						            if ($r['authentication']===false) {
+						                $method = strtolower($r['method']);
+
+						                if (! isset($this->_noAuthPages[$method])) {
+						                    $this->_noAuthPages[$method] = array();
+						                }
+
+						                $this->_noAuthPages[$method][] = $route['prefix'].$v;
+						            }
+
+						            $col->{$r['method']}(
+							            	$v, 
+							            	$r['function']
+						            	);
+				    }
+				    break;
+		        }
+		    }
+
+        }	
+
+		$this->mount($col);
+		
     }
-
-	/**
-	 * Generate Micro Collections before mounting
-	 *
-	 * @return \Phalcon\Mvc\Micro\Collection
-	 */
-    private function microCollection($route){
-        $col = new \Phalcon\Mvc\Micro\Collection();
-        $col
-            // VERSION NUMBER SHOULD BE FIRST URL PARAMETER, ALWAYS
-            ->setPrefix($route['prefix'])
-            // Must be a string in order to support lazy loading
-            ->setHandler($route['handler'])
-            ->setLazy($route['lazy']);
-
-        foreach ($route['collection'] as $r) {
-        	$getRoute = preg_split(
-	        		"/^".
-	        		str_replace('/', '\/', $route['prefix'])."\//i", 
-	        		$_SERVER['REQUEST_URI']
-        		);
-        	
-        	if (!empty($getRoute)) {
-        		if ( '/'.$getRoute[1] === $r['route']) {
-		            //Store unauthenticated Collection
-		            if ($r['authentication']===false) {
-		                $method = strtolower($r['method']);
-
-		                if (! isset($this->_noAuthPages[$method])) {
-		                    $this->_noAuthPages[$method] = array();
-		                }
-
-		                $this->_noAuthPages[$method][] = $route['prefix'].$r['route'];
-		            }
-
-		            $col->{$r['method']}(
-			            	$r['route'], 
-			            	$r['function'], 
-			            	isset($r['resource']) ? $r['resource']:NULL
-		            	);
-
-		            break;
-        		}
-        	}
-        }
-
-        return $col;
-    }
-
 	/**
 	 * Get collections
 	 *

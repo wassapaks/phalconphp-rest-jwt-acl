@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Phalcon\Mvc\Model\Resultset\Simple as Resultset;
-class Members extends \Phalcon\Mvc\Model {
+class Users extends \Phalcon\Mvc\Model {
 
     public $memberid;
     public $firstname;
@@ -12,8 +12,10 @@ class Members extends \Phalcon\Mvc\Model {
 
     public function initialize() {
 
-    	$this->setSource('members');
-    	$this->hasOne('memberid', 'Models\Logininfo', 'memberid',array('alias' => 'logininfo'));
+    	//$this->setSource('members');
+    	//$this->hasOne('memberid', 'App\Models\Logininfo', 'memberid',array('alias' => 'logininfo'));
+
+        $this->hasMany("memberid", "App\Models\Memberroles", "memberid", array('alias' => 'memberroles'));
 
     }
     public function getPayLoad(){
@@ -39,6 +41,18 @@ class Members extends \Phalcon\Mvc\Model {
 
         // Execute the query
         $query = $options['params'] == null ? $members->getReadConnection()->query($sql) : $members->getReadConnection()->query($sql, $options['params']);
+        return new Resultset(null, $members, $query);
+    }
+    public static function userMemberroles(){
+        // A raw SQL statement
+        $sql = "SELECT members.memberid, memberroles.role, members.userLevel FROM memberroles RIGHT JOIN members ON members.memberid = memberroles.memberid";
+
+        // Base model
+
+        $members = new Members();
+
+        // Execute the query
+        $query = $members->getReadConnection()->query($sql);
         return new Resultset(null, $members, $query);
     }
 }

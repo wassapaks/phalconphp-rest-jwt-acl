@@ -14,12 +14,12 @@ $settings = array(
         'port' => 3306
     ),
     'application' => array(
-        'apiURL' => 'http://prodapi',
-        'env' => 'prod' /* dev or prod */
+        'apiURL' => 'http://phalconrestjwt.api',
+        'env' => 'dev' /* dev or prod */
     ),
     'hashkey' => 'iknowyouwantmeiknowyoucare',
     'tokenEXP' => array(
-        'token' => '30 second',
+        'token' => '30 minutes',
         'refreshToken' => '1 day'
     )
     // 'redis' => array(

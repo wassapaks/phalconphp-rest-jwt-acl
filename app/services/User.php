@@ -5,6 +5,7 @@ namespace App\Services;
 
 use Phalcon\DiInterface;
 use PhalconRestJWT\Exceptions\Http;
+use PhalconRestJWT\Constants\Services;
 
 /**
  * Class User Service
@@ -27,11 +28,11 @@ class User{
     protected $table = null;
 
     /**
-     * Di
+     * Config
      *
-     * @var Phalcon\DiInterface
+     * @var Phalcon\Config
      */
-    protected $di;
+    protected $_config;
 
     /**
      * Initialize DI in Class
@@ -40,8 +41,8 @@ class User{
      *
      * @return void
      */
-    public function __construct($di){
-        $this->di = $di;
+    public function __construct($config){
+        $this->_config = $config;
     }
 
     /**
@@ -135,15 +136,15 @@ class User{
 
         $timestamp = time();
         $payload['iat'] = $timestamp;
-        $payload['exp'] = strtotime('+' . $this->di['config']['tokenEXP']['token'], $timestamp);
+        $payload['exp'] = strtotime('+' . $this->_config['tokenEXP']['token'], $timestamp);
 
 
-        $accesstoken = \Firebase\JWT\JWT::encode($payload, $this->di['config']['hashkey']);
+        $accesstoken = \Firebase\JWT\JWT::encode($payload, $this->_config['hashkey']);
         $rtoken = \Firebase\JWT\JWT::encode(array(
             "id" => $payload["id"],
-            "exp" => strtotime('+' . $this->di['config']['tokenEXP']['refreshToken'], $timestamp),
+            "exp" => strtotime('+' . $this->_config['tokenEXP']['refreshToken'], $timestamp),
             "iat" => $timestamp
-        ),$this->di['config']['hashkey']);
+        ),$this->_config['hashkey']);
 
         return array(
             'token' => $accesstoken,

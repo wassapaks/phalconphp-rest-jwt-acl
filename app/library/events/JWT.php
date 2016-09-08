@@ -14,7 +14,7 @@ use PhalconRestJWT\Exceptions\Http;
  * @package PhalconRestJWT
  */
 
-class JWT extends \Phalcon\Events\Manager implements IEvents{
+class JWT implements IEvents{
 
     /**
      * Token from Header
@@ -28,8 +28,14 @@ class JWT extends \Phalcon\Events\Manager implements IEvents{
      */
     protected $_privateKey;
 
-    public function __construct($config) {
-        $this->_privateKey = $config->hashkey;
+    /**
+     * Dependency Injectors
+     * @var PhalconRestJWT\App\Di
+     */
+    protected $_di;
+
+    public function __construct($di) {
+        $this->_di = $di;
     }
 
     /**
@@ -37,8 +43,10 @@ class JWT extends \Phalcon\Events\Manager implements IEvents{
      * @return string token
      */
     public function beforeExecuteRoute($event,$app) {
-        
-        $request = $app->getDi()->get(Services::REQUEST);
+
+        $config = $this->_di->get(Services::CONFIG);
+        $userService = $this->_di->get(Services::USER_SERVICE);
+        $request = $this->_di->getShared(Services::REQUEST);
 
         // Check if it does not need authentication return and skip JWT Checking
         $method = strtolower($app->router->getMatchedRoute()->getHttpMethods());
@@ -65,9 +73,10 @@ class JWT extends \Phalcon\Events\Manager implements IEvents{
 
         $parsetoken = explode(" ",$request->getHeader('Authorization'));
 
-        $token = \Firebase\JWT\JWT::decode($parsetoken[1], $this->_privateKey, array('HS256'));
+        $token = \Firebase\JWT\JWT::decode($parsetoken[1], $config['hashkey'], array('HS256'));
 
         if ($token) {
+            $userService->setUser($token);
             return $token;
         }
 

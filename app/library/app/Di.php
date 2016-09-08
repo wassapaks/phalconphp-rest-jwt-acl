@@ -7,6 +7,7 @@ use PhalconRestJWT\Http\Response;
 use PhalconRestJWT\Constants\Services;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Mvc\Model\Manager as ModelsManager;
+use App\Services\User;
 
 /**
  * Class Di
@@ -33,6 +34,8 @@ class Di extends \Phalcon\Di\FactoryDefault {
 		$this->setShared(Services::CONFIG, $config);
 
         $this->setShared(Services::EVENTS_MANAGER, new EventsManager);
+
+        $this->setShared(Services::USER_SERVICE, new User($config));
 
 	}
 }

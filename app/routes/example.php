@@ -8,12 +8,11 @@
  *   "handler" => 'Controllers\ExampleController',
  *   "lazy" => true,
  *   "collection" => [
- *       [
+ *       "/ping" => [
  *           'method' => 'get',
- *           'route' => '/ping',
  *           'function' => 'pingAction',
  *           'authentication' => FALSE,
- *           'resource' => 'rl1' // OPTIONAL if Authentication is True
+ *           'resource' => 'rl1' // OPTIONAL if Authentication is True this should come from the database
  *       ]
  *   ]
  * ];
@@ -24,33 +23,29 @@ return [
     "handler" => 'App\Controllers\ExampleController',
     "lazy" => true,
     "collection" => [
-        [
+        "/samplenewnew" => [
             'method' => 'get',
-            'route' => '/samplenewnew',
             'function' => 'newnewsample',
-            'authentication' => TRUE,
-            'resource' => 'rl1'
+            'authentication' => true,
+            'acl' => 'rl100'
         ],
-        [
+        "/ping" => [
             'method' => 'get',
-            'route' => '/ping',
             'function' => 'pingAction',
-            'authentication' => FALSE,
-            'resource' => 'rl1'
+            'authentication' => false,
+            'acl' => 'rl1'
         ],
-        [
+        "/test/{id}" => [
             'method' => 'post',
-            'route' => '/test/{id}',
             'function' => 'testAction',
-            'authentication' => FALSE,
-            'resource' => 'rl1'
+            'authentication' => false,
+            'acl' => 'rl1'
         ],
-        [
+        "/auth/test/{name}" => [
             'method' => 'post',
-            'route' => '/auth/test/{name}',
             'function' => 'testAuth',
-            'authentication' => TRUE,
-            'resource' => 'rl1'
+            'authentication' => false,
+            'acl' => 'rl1'
         ],
     ]
 ];

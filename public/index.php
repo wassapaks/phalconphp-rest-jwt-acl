@@ -1,5 +1,9 @@
 <?php
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 /** @var \Phalcon\Config $config */
 $config = null;
 
@@ -14,6 +18,7 @@ $app = null;
   * @return void
   */
 function appError($message){
+
     die("PhalconRestJWT Application Error: " . $message);
 }
 
@@ -78,7 +83,6 @@ try {
 
     // Register Namespaces from autload dependencies, libraries and other directories
     $loader->register();
-
     
     $configPath = CONFIG_DIR . '/config.' . APP_ENV . '.php';
 
@@ -95,13 +99,6 @@ try {
     // Initialize Micro
     $app = new PhalconRestJWT\App\Micro($di);
 
-    $events = new PhalconRestJWT\App\Events(
-            new PhalconRestJWT\Events\JWT($config)
-        );
-
-    // Register Events
-    $events->run($app);
-
     // Bootstrap components
     $bootstrap = new PhalconRestJWT\App\Bootstrap(
         new PhalconRestJWT\Bootstrap\ServiceBootstrap()
@@ -109,6 +106,14 @@ try {
 
     // Initialize your bootstrap components
     $bootstrap->boot($app, $di, $config);
+
+    $events = new PhalconRestJWT\App\Events(
+            new PhalconRestJWT\Events\JWT($di),
+            new PhalconRestJWT\Events\Acl($di)
+        );
+
+    // Register Events
+    $events->run($app);
 
     // Run the application
     $app->run();
@@ -144,7 +149,15 @@ try {
                 )
             );
     }else{
-        $error = $e->getMessage();
+        $error = array(
+            "ApiStatus" => 401,
+            "errorMessage" => "Internal Error.",
+            "errorDev" => array(
+                'dev' => $e->getMessage(),
+                'internalCode' => "Micro - 3",
+                'more' => null
+                )
+            );
     }
     $response->sendContent($error, true);
 } 

@@ -57,6 +57,7 @@ class AclRoles {
                 }
         }
 
+
         try{
             file_put_contents(__DIR__."/acl.data", serialize($acl));
             return true;
@@ -86,7 +87,7 @@ class AclRoles {
     public static function getAcl($user,$activeHandler, $handler){
         // Restore acl object from serialized file
         $acl = unserialize(file_get_contents(__DIR__."/acl.data"));
-
+        
         $allowed = $acl->isAllowed($user, $activeHandler, $handler);
 
         return $allowed;

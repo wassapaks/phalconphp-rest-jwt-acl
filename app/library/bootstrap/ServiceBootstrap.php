@@ -29,8 +29,6 @@ class ServiceBootstrap implements IBootstrap
     public function boot(Micro $app, DiInterface $di, $config)
     {
 
-        $di->setShared(Services::USER_SERVICE, new User($di));
-
         $di->setShared(Services::DB, function() use ($config) {
             
             $type = strtolower($config->database->adapter);
