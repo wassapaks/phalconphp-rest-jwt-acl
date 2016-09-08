@@ -32,78 +32,64 @@ Open  `/app/config/` and and create your own config.<your-desired-name>.php setu
 Change the env ```env => 'dev'``` to prod when your on the production server.
 
 ```php
-$settings = array(
-    'database' => array(
-        'adapter' => 'Mysql',   /* Possible Values: Mysql, Postgres, Sqlite */
-        'host' => 'localhost',
-        'username' => 'root',
-        'password' => 'adminadmin123',
-        'name' => 'dbsample',
-        'port' => 3306
-    ),
-    'application' => array(
-        'baseURL' => 'http://youreSITEipordomain',
-        'apiURL' => 'http://youreRESTipordomain',
-        'env' => 'dev' /* dev or prod */
-    ),
-    'hashkey' => 'iknowyouwantmeiknowyoucare',
-    'tokenEXP' => array(
-        'token' => '60 second',
-        'refreshToken' => '1 day'
-    )
-    // 'redis' => array(
-    //     'host' => 'localhost',
-    //     'port' => 6379,
-    //     'persistent' => false,
-    //     'sessionkey' => 'redissess',
-    //     'dataexpiration' => 172800
-    // )
-);
+return [
+    "prefix" => "/v1/example",
+    "handler" => 'App\Controllers\ExampleController',
+    "lazy" => true,
+    "collection" => [
+        "/samplenewnew" => [
+            'method' => 'get',
+            'function' => 'newnewsample',
+            'authentication' => true,
+            'resource' => ['rl1', 'rl2']
+        ],
+        "/ping" => [
+            'method' => 'get',
+            'function' => 'pingAction',
+            'authentication' => false,
+            'resource' => 'rl1'
+        ],
+        "/test/{id}" => [
+            'method' => 'post',
+            'function' => 'testAction',
+            'authentication' => false,
+            'resource' => 'rl1'
+        ],
+        "/auth/test/{name}" => [
+            'method' => 'post',
+            'function' => 'testAuth',
+            'authentication' => false,
+            'resource' => 'rl1'
+        ],
+    ]
+];
 ```
 
 
 Setup and Installation
 --------------
 
-Install ROBO in your system. ( http://robo.li/ )
+If you are in Linux or Mac run the setup.sh by passing your config name in used in the <your-desired-name>
+
+Example:
 
 ```bash
-robo setup <dev / prod> <migrate-sql / init-only / sqlcommand-only>
+bash setup.sh ef
 ```
 
-- Parameter 1 <dev / prod>
+You can setup it manually:
 
-Use the name after dash (-) like config-dev.php use "dev"
-
-- Parameter 2 <migrate-sql / init-only / sqlcommand-only>
-
-migrate-sql - executes init.sql and all sql files
-
-init-only - executes ini.sql only (initial database creation)
-
-sql-commands-only - executes sql files except init.sql
-
-if no parameter 2 means database has already been setup
-
-EX:
-
-```bash
-robo setup prod init-only
-```
+1. by copying your configuration in dist/config into the app/config
+2. change the value of the APP_ENV in the public/index.php to youre-desired-name in your config filename
+3. create a cache folder in app because it is being ignored by .gitignore
 
 Database Migration
 -------------
 
 When you want to migrate database only use the following command:
 
-```bash
-robo sqlexec <migrate-sql / init-only / sqlcommand-only>
-```
-
-To backup your database before executing the sql commands
-
-```bash
-robo sqldump
+```bash 
+bash migratesql.sh <host> <username> <password> <type> <databasename>
 ```
 
 Routes
@@ -159,85 +145,9 @@ curl
 Server Test
 -------------
 
-With `PHP 5.4`, you can use its builtin web server to quickly test functionality. Make sure to be in the public directory when executing the command below.
-
-```bash
-cd apign/public
-php -S localhost:8000 ../.htrouter.php
-```
-
-Swagger Documentation
--------------
-Swagger Document head can be found on `app/config/routes.php`
-
-To add swagger documentation is to add a comment head before your api controller function
-
-Ex GET:
-```php
-    /**
-     * @SWG\Get(
-     *     path="/authenticate/get",
-     *     summary="Get Authentication",
-     *     tags={"Authentication"},
-     *     description="Description all",
-     *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="Authorization",
-     *         in="header",
-     *         description="Check if your bearer token is still valid",
-     *         required=true,
-     *         type="string"
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation"
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Invalid tag value",
-     *     )
-     * )
-     *
-     */
-```
-
-Ex POST:
-```php
-/**
-     * @SWG\Post(
-     *     path="/agent/login",
-     *     summary="Agent Login",
-     *     tags={"Agent"},
-     *     description="Login Agent and return token",
-     *     consumes={"application/json"},
-     *     produces={"application/json"},
-     *     @SWG\Parameter(
-     *         name="body",
-     *         in="body",
-     *         description="Login Credentials",
-     *         required=true,
-     *         @SWG\Schema(ref="#/definitions/AgentLogin")
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="successful operation"
-     *     ),
-     *     @SWG\Response(
-     *         response="400",
-     *         description="Invalid tag value"
-     *     )
-     * )
-     *
-     * @SWG\Definition(
-     *      definition="AgentLogin",
-     *      @SWG\Property(property="email", type="string"),
-     *      @SWG\Property(property="password", type="string"),
-     * )
-     */
-```
 
 Next Release
 -------------
 
-- automatic nginx configuration using robo
-- automatic database compare and update using FROM database and TO database
+- fixing ACL
+- applying multiple assignment to a single route
