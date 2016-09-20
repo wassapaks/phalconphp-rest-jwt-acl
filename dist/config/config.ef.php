@@ -10,7 +10,7 @@ $settings = array(
         'host' => 'localhost',
         'username' => 'root',
         'password' => 'adminadmin123',
-        'name' => 'dbhcare',
+        'name' => 'dbphalconrest',
         'port' => 3306
     ),
     'application' => array(

@@ -32,61 +32,72 @@ class Micro extends \Phalcon\Mvc\Micro {
 	}
 
 	/**
-	 * Mount route that is only needed.
+	 * Mount routes
 	 *
 	 * @return void It only load the needed route
 	 */
-    private function routeLoader() {
-        $collectionFiles = scandir(ROUTES_DIR);
-        $col = new \Phalcon\Mvc\Micro\Collection();
+	public function resources($collection){
+		$this->_noAuthPages = array_merge_recursive($this->_noAuthPages, $collection->getNoAuth());
+		$this->mount($collection);
+	}
 
-        foreach ($collectionFiles as $collectionFile) {
-            $pathinfo = pathinfo($collectionFile);
-            
-            //Only include php files
-            if ($pathinfo['extension'] === 'php') {
-                // The collection files return their collection objects, so mount
-                // them directly into the router.
-            	$route = include(ROUTES_DIR.'/'.$collectionFile);
+	/*
+	 * An old solution from my past
+	 *
+	 * */
 
-            	if (preg_match("/^".str_replace('/', '\/', $route['prefix'])."\//i", $_SERVER['REQUEST_URI'])) {
-            		$this->_collections[] = $route;
-
-		        	$col
-		            // VERSION NUMBER SHOULD BE FIRST URL PARAMETER, ALWAYS
-		            ->setPrefix($route['prefix'])
-		            // Must be a string in order to support lazy loading
-		            ->setHandler($route['handler'])
-		            ->setLazy($route['lazy']);
-
-				    foreach ($route['collection'] as $v => $r) {
-				    			if(!isset($r['authentication']))
-				    				$r['authentication']=false;
-
-						            if ($r['authentication']===false) {
-						                $method = strtolower($r['method']);
-
-						                if (! isset($this->_noAuthPages[$method])) {
-						                    $this->_noAuthPages[$method] = array();
-						                }
-
-						                $this->_noAuthPages[$method][] = $route['prefix'].$v;
-						            }
-
-						            $col->{$r['method']}(
-							            	$v, 
-							            	$r['function']
-						            	);
-				    }
-				    break;
-		        }
-		    }
-
-        }	
-
-		$this->mount($col);
-		
-    }
+//    private function routeLoader() {
+//        $collectionFiles = scandir(ROUTES_DIR);
+//        $col = new \Phalcon\Mvc\Micro\Collection();
+//
+//        foreach ($collectionFiles as $collectionFile) {
+//            $pathinfo = pathinfo($collectionFile);
+//
+//            //Only include php files
+//            if ($pathinfo['extension'] === 'php') {
+//                // The collection files return their collection objects, so mount
+//                // them directly into the router.
+//            	$route = include(ROUTES_DIR.'/'.$collectionFile);
+//
+//				// Made my own benchmark and it still works great on 500 api request per second
+//				// In progress middleware caching
+//            	//if (preg_match("/^".str_replace('/', '\/', $route['prefix'])."\//i", $_SERVER['REQUEST_URI'])) {
+//            		$this->_collections[] = $route;
+//
+//		        	$col
+//		            // VERSION NUMBER SHOULD BE FIRST URL PARAMETER, ALWAYS
+//		            ->setPrefix($route['prefix'])
+//		            // Must be a string in order to support lazy loading
+//		            ->setHandler($route['handler'])
+//		            ->setLazy($route['lazy']);
+//
+//				    foreach ($route['collection'] as $v => $r) {
+//				    			if(!isset($r['authentication']))
+//				    				$r['authentication']=false;
+//
+//						            if ($r['authentication']===false) {
+//						                $method = strtolower($r['method']);
+//
+//						                if (! isset($this->_noAuthPages[$method])) {
+//						                    $this->_noAuthPages[$method] = array();
+//						                }
+//
+//						                $this->_noAuthPages[$method][] = $route['prefix'].$v;
+//						            }
+//						            $col->{$r['method']}(
+//							            	$v,
+//							            	$r['function']
+//						            	);
+//				    }
+//				    //break;
+//		        //}
+//		    }
+//
+//        }
+//
+//		$this->mount($col);
+//
+//    }
 	/**
 	 * Get collections
 	 *
@@ -112,7 +123,7 @@ class Micro extends \Phalcon\Mvc\Micro {
 	public function run() {
 
 		// Call route loader
-		$this->routeLoader();
+		//$this->routeLoader();
 
 		// Send headers
 		$this->response->setHeader('Access-Control-Allow-Origin', '*');

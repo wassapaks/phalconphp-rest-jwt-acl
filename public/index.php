@@ -18,7 +18,6 @@ $app = null;
   * @return void
   */
 function appError($message){
-
     die("PhalconRestJWT Application Error: " . $message);
 }
 
@@ -101,7 +100,8 @@ try {
 
     // Bootstrap components
     $bootstrap = new PhalconRestJWT\App\Bootstrap(
-        new PhalconRestJWT\Bootstrap\ServiceBootstrap()
+        new PhalconRestJWT\Bootstrap\ServiceBootstrap(),
+        new PhalconRestJWT\Bootstrap\CollectionBootstrap()
     );
 
     // Initialize your bootstrap components
@@ -150,7 +150,7 @@ try {
             );
     }else{
         $error = array(
-            "ApiStatus" => 401,
+            "ApiStatus" => 500,
             "errorMessage" => "Internal Error.",
             "errorDev" => array(
                 'dev' => $e->getMessage(),

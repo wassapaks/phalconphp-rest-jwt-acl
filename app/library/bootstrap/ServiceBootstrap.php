@@ -7,7 +7,6 @@ use PhalconRestJWT\Constants\Services;
 use	PhalconRestJWT\Interfaces\IBootstrap;
 use	Phalcon\DiInterface;
 use	PhalconRestJWT\App\Micro;
-use	App\Services\User;
 
 /**
  * Class ServiceBootstrap

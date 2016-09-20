@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\Members,
-    PhalconRestJWT\Exceptions\Http;
+use App\Models\Members;
+use PhalconRestJWT\Exceptions\Http;
 
 class ExampleController extends \Phalcon\Mvc\Controller {
 

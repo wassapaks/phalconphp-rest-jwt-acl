@@ -10,12 +10,12 @@ $settings = array(
         'host' => 'localhost',
         'username' => 'root',
         'password' => 'adminadmin123',
-        'name' => 'phalconrestjwt',
+        'name' => 'dbphalconrest',
         'port' => 3306
     ),
     'application' => array(
         'apiURL' => 'http://phalconrestjwt.api',
-        'env' => 'dev' /* dev or prod */
+        'env' => 'dev' /* dev or prod or maintenance */
     ),
     'hashkey' => 'iknowyouwantmeiknowyoucare',
     'tokenEXP' => array(
