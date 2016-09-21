@@ -17,7 +17,6 @@ class AclRoles {
      * @return FALSE|void
      */
     public static function setAcl($resources,$roles) {
-
         //Create the ACL
         $acl = new \Phalcon\Acl\Adapter\Memory();
         //The default action is DENY access
@@ -59,7 +58,7 @@ class AclRoles {
 
 
         try{
-            file_put_contents(__DIR__."/acl.data", serialize($acl));
+            file_put_contents(APP_DIR."/cache/acl.data", serialize($acl));
             return true;
         }
         catch (\Exception $e){
@@ -85,8 +84,9 @@ class AclRoles {
      * @return bollean
      */
     public static function getAcl($user,$activeHandler, $handler){
+
         // Restore acl object from serialized file
-        $acl = unserialize(file_get_contents(__DIR__."/acl.data"));
+        $acl = unserialize(file_get_contents(APP_DIR."/cache/acl.data"));
         
         $allowed = $acl->isAllowed($user, $activeHandler, $handler);
 

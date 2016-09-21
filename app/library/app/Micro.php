@@ -37,6 +37,13 @@ class Micro extends \Phalcon\Mvc\Micro {
 	 * @return void It only load the needed route
 	 */
 	public function resources($collection){
+
+		$this->_collections[] = [
+			"prefix" => $collection->getPrefix(),
+			"handler" => $collection->getHandler(),
+			"collection" => $collection->getCollections()
+		];
+
 		$this->_noAuthPages = array_merge_recursive($this->_noAuthPages, $collection->getNoAuth());
 		$this->mount($collection);
 	}

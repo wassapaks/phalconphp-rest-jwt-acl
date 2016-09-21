@@ -13,6 +13,125 @@ use Utilities\Guid\Guid;
 use Security\Jwt\JWT;
 
 class UsersController extends ControllerBase {
+
+
+    public function userLogin(){
+
+        if($this->request->isPost()){
+
+            $username   = $this->request->getPost('username');
+            $password   = $this->request->getPost('password');
+
+            $data = $this->userService->authorizeUser(array("username"=>$username,"password"=>$password), "Users");
+
+        }
+
+        return $data;
+
+    }
+
+    public function refreshtoken(){
+
+        $errorState = '';
+        if($this->request->isPost()){
+
+            $rtoken   = $this->request->getPost('refresh');
+
+            $decoded = \Firebase\JWT\JWT::decode($rtoken, $this->config["hashkey"], array('HS256'));
+
+            return $this->User->authorizeUser(array('memberid'=>$decoded->id),'Users', true);
+
+        }
+
+        $this->ErrorMessage->recNotFound("MEM-RT");
+
+    } //end of refreshtoken fucntion
+
+    public function initializeRoles(){
+
+
+        //
+        // Things to do for ACL
+        // 1. Make ACL roles multiple for each API
+        // 2. Make an Add Role ACL module instead of recreating everything,
+        // 3. Create an API for recalibrating the ACL Roles
+        // 4. Each user must have a Cache ACL Role
+
+        $own = Users::findFirst(
+            array(
+                "userLevel = 'OWNER'",
+                "columns" => "userid"
+            ));
+
+
+//
+//        $rolesResources = array($own->userid => array());
+//        $users = array($own->userid);
+//        $collectionFiles = scandir(ROUTES_DIR);
+//
+//        foreach ($collectionFiles as $collectionFile) {
+//            $pathinfo = pathinfo($collectionFile);
+//
+//            //Only include php files
+//            if ($pathinfo['extension'] === 'php') {
+//                // The collection files return their collection objects, so mount
+//                // them directly into the router.
+//                $route = include(ROUTES_DIR.'/'.$collectionFile);
+//
+//                $controller = str_replace('App\Controllers\\','',$route['handler']);
+//
+//                // foreach ($rec->toArray() as $r){
+//                //     foreach ($route["collection"] as $col){
+//                //         if ($col['acl'] == $r['role'] && $r['userLevel'] != 'OWNER'){
+//                //             $rolesResources[$r['memberid']][$controller][] = $col['function'];
+//                //         }
+//                //     }
+//                // }
+//
+//                foreach ($route["collection"] as $col){
+//                    $rolesResources[$own->memberid][$controller][] = $col['function'];
+//                    foreach ($rec->toArray() as $r){
+//                        $col['acl'] = !isset($col['acl']) ? null : $col['acl'];
+//                        if($col['acl'] == $r['role'] && $r['memberid'] != $own->memberid) {
+//                            if(!isset($rolesResources[$r['memberid']])){
+//                                $users[] = $r['memberid'];
+//                            }
+//                            $rolesResources[$r['memberid']][$controller][] = $col['function'];
+//                        }
+//                    }
+//                }
+//            }
+//        }
+
+
+         $rolesResources = array($own->userid => array());
+         $users = array($own->userid);
+         $collections = $this->di->getShared('collections');
+
+        $rec = new Users();
+
+         foreach($collections as $col){
+             foreach($col['collection'] as $colh) {
+                 $controller = str_replace('App\Controllers\\','',$col['handler']);
+                 $rolesResources[$own->userid][$controller][] = $colh[1];
+                 foreach($rec->userAndRoles() as $r){
+                     if($colh[3] == $r->role && $r->userid != $own->userid) {
+                         if(!isset($rolesResources[$r->userid])){
+                             $users[] = $r->userid;
+                         }
+                         $rolesResources[$r->userid][$controller][] = $colh[1];
+                     }
+                 }
+             }
+         }
+
+
+        $data = array(AclRoles::setAcl($rolesResources,$users) ? "Successfully created your roles!": "Something went wrong");
+
+        return $data;
+
+    }
+
 //
 //    public function addMember(){
 //
@@ -1293,123 +1412,5 @@ class UsersController extends ControllerBase {
 //    public function getRoleitemsCb(){
 //        return array('roleitems' => self::getRoleitems());
 //    }
-
-
-    public function memberLogin(){
-
-        if($this->request->isPost()){
-
-            $username   = $this->request->getPost('username');
-            $password   = $this->request->getPost('password');
-
-            $data = $this->userService->authorizeUser(array("username"=>$username,"password"=>$password), "Users");
-
-        }
-
-        return $data;
-
-    }
-
-    public function refreshtoken(){
-
-        $errorState = '';
-        if($this->request->isPost()){
-
-            $rtoken   = $this->request->getPost('refresh');
-
-            $decoded = \Firebase\JWT\JWT::decode($rtoken, $this->config["hashkey"], array('HS256'));
-
-            return $this->User->authorizeUser(array('memberid'=>$decoded->id),'Users', true);
-
-        }
-
-        $this->ErrorMessage->recNotFound("MEM-RT");
-
-    } //end of refreshtoken fucntion
-
-    public function initializeRoles(){
-
-        //
-        // Things to do for ACL
-        // 1. Make ACL roles multiple for each API
-        // 2. Make an Add Role ACL module instead of recreating everything, 
-        // 3. Create an API for recalibrating the ACL Roles
-        // 4. Each user must have a Cache ACL Role
-
-        $own = Members::findFirst(
-            array(
-                "userLevel = 'OWNER'",
-                "columns" => "memberid"
-            ));
-
-        $rec = Members::userMemberroles();
-
-        $rolesResources = array($own->memberid => array());
-        $users = array($own->memberid);
-        $collectionFiles = scandir(ROUTES_DIR);
-
-        foreach ($collectionFiles as $collectionFile) {
-            $pathinfo = pathinfo($collectionFile);
-            
-            //Only include php files
-            if ($pathinfo['extension'] === 'php') {
-                // The collection files return their collection objects, so mount
-                // them directly into the router.
-                $route = include(ROUTES_DIR.'/'.$collectionFile);
-
-                $controller = str_replace('App\Controllers\\','',$route['handler']);
-
-                // foreach ($rec->toArray() as $r){
-                //     foreach ($route["collection"] as $col){
-                //         if ($col['acl'] == $r['role'] && $r['userLevel'] != 'OWNER'){
-                //             $rolesResources[$r['memberid']][$controller][] = $col['function'];
-                //         }
-                //     }             
-                // }
-
-                foreach ($route["collection"] as $col){
-                    $rolesResources[$own->memberid][$controller][] = $col['function'];
-                    foreach ($rec->toArray() as $r){
-                        $col['acl'] = !isset($col['acl']) ? null : $col['acl'];
-                        if($col['acl'] == $r['role'] && $r['memberid'] != $own->memberid) {
-                            if(!isset($rolesResources[$r['memberid']])){
-                                $users[] = $r['memberid'];
-                            }
-                            $rolesResources[$r['memberid']][$controller][] = $col['function'];
-                        }
-                    }
-                }
-            }
-        }
-
-
-
-        // $rolesResources = array($own->memberid => array());
-        // $users = array($own->memberid);
-        // $collections = $this->di->getShared('collections');
-
-        // foreach($collections as $col){
-        //     foreach($col->getHandlers() as $colh) {
-
-        //         $controller = str_replace('Controllers\\','',$col->getHandler());
-        //         $rolesResources[$own->memberid][$controller][] = $colh[2];
-        //         foreach($rec as $r){
-        //             if($colh[3] == $r->role && $r->memberid != $own->memberid) {
-        //                 if(!isset($rolesResources[$r->memberid])){
-        //                     $users[] = $r->memberid;
-        //                 }
-        //                 $rolesResources[$r->memberid][$controller][] = $colh[2];
-        //             }
-        //         }
-        //     }
-        // }
-
-
-
-        $data = array(AclRoles::setAcl($rolesResources,$users) ? "Successfully created your roles!": "Something went wrong");
-
-        return $data;
-
-    }
 
 }

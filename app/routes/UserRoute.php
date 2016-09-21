@@ -7,26 +7,26 @@ class UserRoute extends Resources {
     public function initialize()
     {
         $this
-            ->handler('App\Controllers\ExampleController')
+            ->handler('App\Controllers\UsersController')
             ->lazy(true)
             ->collections([
-                "/userlogin" => [
+                "/login" => [
                     'post',
-                    'memberLogin',
+                    'userLogin',
                     false,
-                    'rl1'
+                    'userlogin'
                 ],
                 "/refreshtoken" => [
                     'post',
                     'refreshtoken',
                     false,
-                    'rl1'
+                    'userlogin'
                 ],
                 "/initroles" => [
-                    'post',
+                    'get',
                     'initializeRoles',
                     false,
-                    'rl1'
+                    'roles'
                 ]
             ]);
     }

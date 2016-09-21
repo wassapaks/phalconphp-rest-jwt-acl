@@ -12,6 +12,7 @@ namespace PhalconRestJWT\App;
 class Resources extends \Phalcon\Mvc\Micro\Collection
 {
     protected $_noAuthPages = array();
+    protected $_collections = array();
 
     public static function init($prefix)
     {
@@ -45,7 +46,7 @@ class Resources extends \Phalcon\Mvc\Micro\Collection
         return $this;
     }
     public function collections($route){
-
+        $this->_collections = $route;
         foreach ($route as $url => $r) {
 
             $method = strtolower($r[0]);
@@ -75,5 +76,8 @@ class Resources extends \Phalcon\Mvc\Micro\Collection
     public function lazy($bol){
         $this->setLazy($bol);
         return $this;
+    }
+    public function getCollections(){
+        return $this->_collections;
     }
 }
