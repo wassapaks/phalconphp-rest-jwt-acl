@@ -113,9 +113,22 @@ class UsersController extends ControllerBase {
          foreach($collections as $col){
              foreach($col['collection'] as $colh) {
                  $controller = str_replace('App\Controllers\\','',$col['handler']);
-                 $rolesResources[$own->userid][$controller][] = $colh[1];
+                 if( isset($colh[1]) ){
+                     $rolesResources[$own->userid][$controller][] = $colh[1];
+                 }
+
                  foreach($rec->userAndRoles() as $r){
-                     if($colh[3] == $r->role && $r->userid != $own->userid) {
+
+                     $currentRole = false;
+                     if(isset($colh[3])){
+                         if(is_array($colh[3])){
+                             $currentRole = in_array($r->role , $colh[3]);
+                         }else{
+                             $currentRole = $colh[3] == $r->role ? true : false;
+                         }
+                     }
+
+                     if($currentRole && $r->userid != $own->userid) {
                          if(!isset($rolesResources[$r->userid])){
                              $users[] = $r->userid;
                          }
@@ -124,7 +137,6 @@ class UsersController extends ControllerBase {
                  }
              }
          }
-
 
         $data = array(AclRoles::setAcl($rolesResources,$users) ? "Successfully created your roles!": "Something went wrong");
 

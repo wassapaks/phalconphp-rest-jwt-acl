@@ -14,13 +14,11 @@ class UserRoute extends Resources {
                     'post',
                     'userLogin',
                     false,
-                    'userlogin'
                 ],
                 "/refreshtoken" => [
                     'post',
                     'refreshtoken',
-                    false,
-                    'userlogin'
+                    false
                 ],
                 "/initroles" => [
                     'get',

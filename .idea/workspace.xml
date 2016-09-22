@@ -2,15 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0193e59-964b-495e-b641-b5fde642800e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/library/security/AclRoles.php" afterPath="$PROJECT_DIR$/app/library/security/AclRoles.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/library/bootstrap/CollectionBootstrap.php" afterPath="$PROJECT_DIR$/app/library/bootstrap/CollectionBootstrap.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/ExampleRoute.php" afterPath="$PROJECT_DIR$/app/routes/ExampleRoute.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/library/app/Micro.php" afterPath="$PROJECT_DIR$/app/library/app/Micro.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/library/app/Resources.php" afterPath="$PROJECT_DIR$/app/library/app/Resources.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes/UserRoute.php" afterPath="$PROJECT_DIR$/app/routes/UserRoute.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/Users.php" afterPath="$PROJECT_DIR$/app/models/Users.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/UsersController.php" afterPath="$PROJECT_DIR$/app/controllers/UsersController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/library/security/acl.data" afterPath="$PROJECT_DIR$/app/library/security/acl.data" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="phalcon-rest-jwt.iws" />
@@ -33,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="UsersController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="UsersController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/UsersController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.25">
-              <caret line="128" column="125" selection-start-line="128" selection-start-column="125" selection-end-line="128" selection-end-column="125" />
+            <state vertical-scroll-proportion="2.142857">
+              <caret line="128" column="22" selection-start-line="128" selection-start-column="22" selection-end-line="128" selection-end-column="22" />
               <folding>
                 <element signature="e#35#72#0#PHP" expanded="true" />
               </folding>
@@ -45,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AclRoles.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AclRoles.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/library/security/AclRoles.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41734862">
-              <caret line="51" column="38" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
+            <state vertical-scroll-proportion="-10.0">
+              <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -102,8 +93,8 @@
       <file leaf-file-name="UserRoute.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/routes/UserRoute.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.0">
-              <caret line="24" column="33" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
+            <state vertical-scroll-proportion="-9.375">
+              <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -112,7 +103,7 @@
       <file leaf-file-name="Resources.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/library/app/Resources.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.333334">
+            <state vertical-scroll-proportion="-31.0">
               <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
               <folding />
             </state>
@@ -122,8 +113,8 @@
       <file leaf-file-name="ExampleRoute.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/routes/ExampleRoute.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.3333335">
-              <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+            <state vertical-scroll-proportion="-10.375">
+              <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -164,14 +155,14 @@
         <option value="$PROJECT_DIR$/app/routes/members.php" />
         <option value="$PROJECT_DIR$/app/routes/Example.php" />
         <option value="$PROJECT_DIR$/app/library/events/JWT.php" />
-        <option value="$PROJECT_DIR$/app/routes/UserRoute.php" />
-        <option value="$PROJECT_DIR$/app/routes/ExampleRoute.php" />
         <option value="$PROJECT_DIR$/app/models/Users.php" />
         <option value="$PROJECT_DIR$/app/library/app/Resources.php" />
         <option value="$PROJECT_DIR$/app/library/app/Micro.php" />
         <option value="$PROJECT_DIR$/app/library/bootstrap/CollectionBootstrap.php" />
-        <option value="$PROJECT_DIR$/app/controllers/UsersController.php" />
         <option value="$PROJECT_DIR$/app/library/security/AclRoles.php" />
+        <option value="$PROJECT_DIR$/app/routes/UserRoute.php" />
+        <option value="$PROJECT_DIR$/app/routes/ExampleRoute.php" />
+        <option value="$PROJECT_DIR$/app/controllers/UsersController.php" />
       </list>
     </option>
   </component>
@@ -733,7 +724,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="97" column="33" selection-start-line="97" selection-start-column="20" selection-end-line="97" selection-end-column="33" />
           <folding>
-            <element signature="e#33#57#0#PHP" expanded="true" />
+            <element signature="e#33#57#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -800,7 +791,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="97" column="33" selection-start-line="97" selection-start-column="20" selection-end-line="97" selection-end-column="33" />
           <folding>
-            <element signature="e#33#57#0#PHP" expanded="true" />
+            <element signature="e#33#57#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -897,7 +888,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="97" column="33" selection-start-line="97" selection-start-column="20" selection-end-line="97" selection-end-column="33" />
           <folding>
-            <element signature="e#33#57#0#PHP" expanded="true" />
+            <element signature="e#33#57#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -952,7 +943,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="38" />
           <folding>
-            <element signature="e#45#83#0#PHP" expanded="true" />
+            <element signature="e#45#83#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -961,14 +952,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="31" column="21" selection-start-line="31" selection-start-column="10" selection-end-line="31" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/Userroles.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.25">
-          <caret line="2" column="20" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -983,36 +966,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes/UserRoute.php">
+    <entry file="file://$PROJECT_DIR$/public/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.0">
-          <caret line="24" column="33" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
+        <state vertical-scroll-proportion="-10.625">
+          <caret line="30" column="19" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/library/bootstrap/CollectionBootstrap.php">
+    <entry file="file://$PROJECT_DIR$/app/library/security/AclRoles.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.0">
-          <caret line="24" column="56" selection-start-line="24" selection-start-column="56" selection-end-line="24" selection-end-column="56" />
-          <folding>
-            <element signature="e#44#72#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes/ExampleRoute.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.3333335">
-          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/library/app/Resources.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.333334">
-          <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1027,29 +992,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.php">
+    <entry file="file://$PROJECT_DIR$/app/library/bootstrap/CollectionBootstrap.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.625">
-          <caret line="30" column="19" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="19" />
+        <state vertical-scroll-proportion="-15.0">
+          <caret line="24" column="56" selection-start-line="24" selection-start-column="56" selection-end-line="24" selection-end-column="56" />
+          <folding>
+            <element signature="e#44#72#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/Userroles.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.25">
+          <caret line="2" column="20" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes/ExampleRoute.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.375">
+          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes/UserRoute.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.375">
+          <caret line="15" column="26" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/library/app/Resources.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-31.0">
+          <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/UsersController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.25">
-          <caret line="128" column="125" selection-start-line="128" selection-start-column="125" selection-end-line="128" selection-end-column="125" />
+        <state vertical-scroll-proportion="2.142857">
+          <caret line="128" column="22" selection-start-line="128" selection-start-column="22" selection-end-line="128" selection-end-column="22" />
           <folding>
             <element signature="e#35#72#0#PHP" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/library/security/AclRoles.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41734862">
-          <caret line="51" column="38" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
