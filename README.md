@@ -31,14 +31,38 @@ Open  `/app/config/` and and create your own config.<your-desired-name>.php setu
 Change the env ```env => 'dev'``` to prod when your on the production server.
 
 ```php
-
+$settings = array(
+    'database' => array(
+        'adapter' => 'Mysql',   /* Possible Values: Mysql, Postgres, Sqlite */
+        'host' => 'localhost',
+        'username' => 'root',
+        'password' => 'adminadmin123',
+        'name' => 'dbphalconrest',
+        'port' => 3306
+    ),
+    'application' => array(
+        'apiURL' => 'http://phalconrestjwt.api',
+        'env' => 'dev' /* dev or prod or maintenance */
+    ),
+    'hashkey' => 'iknowyouwantmeiknowyoucare',
+    'tokenEXP' => array(
+        'token' => '30 minutes',
+        'refreshToken' => '1 day'
+    )
+    // 'redis' => array(
+    //     'host' => 'localhost',
+    //     'port' => 6379,
+    //     'persistent' => false,
+    //     'sessionkey' => 'pisess',
+    //     'dataexpiration' => 172800
+    // )
+);
 ```
-
 
 Setup and Installation
 --------------
 
-If you are in Linux or Mac run the setup.sh by passing your config name in used in the <your-desired-name>
+If you are in Linux or Mac run the setup.sh by passing your config name used from the instruction above
 
 Example:
 
@@ -65,12 +89,6 @@ Routes
 -------------
 Routes are stored in `app/routes/nameRoute.php` as an object. A route has a method (GET, POST, DELETE, PUT, MAP(post or get)).
 
-Conventions:
-
-1. All lower case
-2. ACL should depend on the roles on the database, You can have multiple ACL for routes
-3. After adding your own route go to app/library/app/bootstrap/CollectionBootstrap.php and add your route. 
-4. 
 
 ```php
 namespace App\Routes;
@@ -111,6 +129,38 @@ class ExampleRoute extends Resources {
     }
 }
 ```
+
+Conventions:
+
+1. all in lower case
+2. After adding your own route go to ```library/app/bootstrap/CollectionBootstrap.php``` 
+```php
+$app->resources(UserRoute::init('/route-prefix-here'));
+```
+place you prefix in the init()
+3. On the route Collections ```->collections([])``` is where you should place your routes
+```php
+[
+    "/testpost" => [
+        'post',
+        'newnewsample',
+        false,
+        's1',
+    ],
+    "/ping" => [
+        'map',
+        'pingAction',
+         true,
+         ['s4', 's2']
+    ]
+]
+``` 
+You key will be the route and the value should be an array with the following format [httpMethod, controllerMethod, authenticationRequired, aclRoles]
+2. ACL should depend on the roles on the database, You can have multiple ACL for routes on the database you can see on the userroles that each user has assign roles, which you can see in the collections array 
+
+
+
+
 
 Note: For Routes with Paramters, make sure the action you map to has the proper parameters set (in order to read paramters correctly). 
 http://docs.phalconphp.com/en/latest/reference/micro.html#defining-routes
