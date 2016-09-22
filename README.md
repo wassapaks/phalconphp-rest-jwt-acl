@@ -132,15 +132,15 @@ class ExampleRoute extends Resources {
 
 ## **Conventions:** ##
 
-1. all in lower case
+1.all in lower case
 
-2. After adding your own route go to ```library/app/bootstrap/CollectionBootstrap.php``` 
+2.After adding your own route go to ```library/app/bootstrap/CollectionBootstrap.php``` 
 ```php
 $app->resources(UserRoute::init('/route-prefix-here'));
 ```
 place you prefix in the init()
 
-3. On the route Collections ```->collections([])``` is where you should place your routes
+3.On the route Collections ```->collections([])``` is where you should place your routes
 ```php
 [
     "/testpost" => [
@@ -159,7 +159,7 @@ place you prefix in the init()
 ``` 
 You key will be the route and the value should be an array with the following format ```[httpMethod, controllerMethod, authenticationRequired, aclRoles]```
 
-4. ACL roles should depend on the roles on your the userroles tables, You can have multiple ACL for a single route. If you check on the userroles you can see roles assign to users, and those roles are attached to an api as well, so it will restrict a user on accessing that API.
+4.ACL roles should depend on the roles on your the userroles tables, You can have multiple ACL for a single route. If you check on the userroles you can see roles assign to users, and those roles are attached to an api as well, so it will restrict a user on accessing that API.
 
 
 Note: For Routes with Paramters, make sure the action you map to has the proper parameters set (in order to read parameters correctly). 
