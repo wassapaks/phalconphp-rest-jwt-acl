@@ -7,14 +7,13 @@ First of all i wanna give credits to CMOORE, Jeteokefe and Redound for their out
 This project uses Phalcon Micro Framework for REST API with JWT and ACL
 ---------------------------------------------------
 
-The purpose of this project is to have a base Phalcon REST API framework with JWT and ACL applied. And also to apply the best practices done by Cmoore, Jeteokefe and Redound. 
+The purpose of this project is to have a base Phalcon REST API framework with JWT and ACL applied. And also to apply some practices done by Cmoore, Jeteokefe and Redound. 
 
-This project idea is a collection of different approaches from the most popular phalcon rest api frameworks created, and with some of my ideas to enhance their existing approaches.
+This project idea is a collection of different approaches from the most popular phalcon rest api frameworks created, together with some of my ideas which i thought of enhancements.
 
-Things that i have done: I added an easy to setup routes for each collections separated in each file, a JWT authentication event, and an ACL records checking event for each user, response and request envelopes (request class is from redound) and other functions from other existing phalcon rest frameworks. You may find some of the codes familiar, i have added comments to credit the code owner and also to identify which are my creations.
+Things that i have done: I added an easy to setup routes for each collections separated in each file, a JWT authentication event, and an ACL records checking event for each user, response and request envelopes (request class is from redound). You may find some of the codes familiar, i have added comments to credit the code owner and also to identify which are my creations.
 
-Because phalconphp is all about speed and usability, using kcachegrind and xdebug to optimize the micro route collection setup when having a large route collection. ( Caching of routes is not yet available but currently i made a workaround for speed, that will be for next release).
-
+Because phalconphp is all about speed and usability, using kcachegrind and xdebug to check when having a huge large route collection, still works fine but as suggestion in the phalcon documentation use cache. ( Caching of routes is next release.)
 
 Why do this?
 http://www.thebuzzmedia.com/designing-a-secure-rest-api-without-oauth-authentication/
@@ -32,37 +31,7 @@ Open  `/app/config/` and and create your own config.<your-desired-name>.php setu
 Change the env ```env => 'dev'``` to prod when your on the production server.
 
 ```php
-return [
-    "prefix" => "/v1/example",
-    "handler" => 'App\Controllers\ExampleController',
-    "lazy" => true,
-    "collection" => [
-        "/samplenewnew" => [
-            'method' => 'get',
-            'function' => 'newnewsample',
-            'authentication' => true,
-            'resource' => ['rl1', 'rl2']
-        ],
-        "/ping" => [
-            'method' => 'get',
-            'function' => 'pingAction',
-            'authentication' => false,
-            'resource' => 'rl1'
-        ],
-        "/test/{id}" => [
-            'method' => 'post',
-            'function' => 'testAction',
-            'authentication' => false,
-            'resource' => 'rl1'
-        ],
-        "/auth/test/{name}" => [
-            'method' => 'post',
-            'function' => 'testAuth',
-            'authentication' => false,
-            'resource' => 'rl1'
-        ],
-    ]
-];
+
 ```
 
 
@@ -94,36 +63,53 @@ bash migratesql.sh <host> <username> <password> <type> <databasename>
 
 Routes
 -------------
-Routes are stored in `app/routes/routesname.php` as a return array. A route has a method (HEAD, GET, POST, PATCH, DELETE, OPTIONS), uri (which can contain regular expressions) and handler/controller to point to.
+Routes are stored in `app/routes/nameRoute.php` as an object. A route has a method (GET, POST, DELETE, PUT, MAP(post or get)).
 
 Conventions:
 
 1. All lower case
-2. prefix should be the module name
-3. ACL should depend on the roles on the database, for the moment you can have all the same
+2. ACL should depend on the roles on the database, You can have multiple ACL for routes
+3. After adding your own route go to app/library/app/bootstrap/CollectionBootstrap.php and add your route. 
+4. 
 
 ```php
+namespace App\Routes;
+use PhalconRestJWT\App\Resources;
 
-return [
-    "prefix" => "/members",
-    "handler" => 'Controllers\MembersController',
-    "lazy" => true,
-    "collection" => [
-        [
-            'method' => 'post',
-            'route' => '/memberlogin',
-            'function' => 'memberLogin',
-            'authentication' => FALSE
-        ],
-        [
-            'method' => 'post',
-            'route' => '/refreshtoken',
-            'function' => 'refreshtoken',
-            'authentication' => TRUE,
-            'resource' => 'rl1' //ACL Rules
-        ]
-    ]
-];
+class ExampleRoute extends Resources {
+    public function initialize()
+    {
+        $this
+            ->handler('App\Controllers\ExampleController')
+            ->lazy(true)
+            ->collections([
+                "/testpost" => [
+                    'post',
+                    'newnewsample',
+                    false,
+                    's1',
+                ],
+                "/testget/{id}" => [
+                    'get',
+                    'testAction',
+                    false,
+                    's2'
+                ],
+                "/authtest" => [
+                    'post',
+                    'testAuth',
+                    false,
+                    's3'
+                ],
+                "/ping" => [
+                    'map',
+                    'pingAction',
+                    true,
+                    ['s4', 's2']
+                ]
+            ]);
+    }
+}
 ```
 
 Note: For Routes with Paramters, make sure the action you map to has the proper parameters set (in order to read paramters correctly). 
