@@ -3,16 +3,9 @@
 namespace App\Controllers;
 
 use PhalconRestJWT\Security\AclRoles;
-use App\Models\Users as Users;
-use App\Models\Userroles as Userroles;
-use Phalcon\Http\Request;
-use Phalcon\Mvc\Model\Transaction\Failed as TxFailed;
-use Phalcon\Mvc\Model\Transaction\Manager as TxManager;
-use Phalcon\Mvc\Model\Manager as ModelsManager;
-use Utilities\Guid\Guid;
-use Security\Jwt\JWT;
+use App\Models\Users;
 
-class UsersController extends ControllerBase {
+class UsersController extends ControllerBase{
 
 
     public function userLogin(){
@@ -45,10 +38,9 @@ class UsersController extends ControllerBase {
 
         $this->ErrorMessage->recNotFound("MEM-RT");
 
-    } //end of refreshtoken fucntion
+    }
 
     public function initializeRoles(){
-
 
         //
         // Things to do for ACL
@@ -62,47 +54,6 @@ class UsersController extends ControllerBase {
                 "userLevel = 'OWNER'",
                 "columns" => "userid"
             ));
-
-
-//
-//        $rolesResources = array($own->userid => array());
-//        $users = array($own->userid);
-//        $collectionFiles = scandir(ROUTES_DIR);
-//
-//        foreach ($collectionFiles as $collectionFile) {
-//            $pathinfo = pathinfo($collectionFile);
-//
-//            //Only include php files
-//            if ($pathinfo['extension'] === 'php') {
-//                // The collection files return their collection objects, so mount
-//                // them directly into the router.
-//                $route = include(ROUTES_DIR.'/'.$collectionFile);
-//
-//                $controller = str_replace('App\Controllers\\','',$route['handler']);
-//
-//                // foreach ($rec->toArray() as $r){
-//                //     foreach ($route["collection"] as $col){
-//                //         if ($col['acl'] == $r['role'] && $r['userLevel'] != 'OWNER'){
-//                //             $rolesResources[$r['memberid']][$controller][] = $col['function'];
-//                //         }
-//                //     }
-//                // }
-//
-//                foreach ($route["collection"] as $col){
-//                    $rolesResources[$own->memberid][$controller][] = $col['function'];
-//                    foreach ($rec->toArray() as $r){
-//                        $col['acl'] = !isset($col['acl']) ? null : $col['acl'];
-//                        if($col['acl'] == $r['role'] && $r['memberid'] != $own->memberid) {
-//                            if(!isset($rolesResources[$r['memberid']])){
-//                                $users[] = $r['memberid'];
-//                            }
-//                            $rolesResources[$r['memberid']][$controller][] = $col['function'];
-//                        }
-//                    }
-//                }
-//            }
-//        }
-
 
          $rolesResources = array($own->userid => array());
          $users = array($own->userid);

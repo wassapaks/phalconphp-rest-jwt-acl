@@ -2,6 +2,15 @@
 
 namespace PhalconRestJWT\Constants;
 
+/**
+ * Class HttpMethods
+ *
+ * Constants Taken from Redound but added somethings i need
+ *
+ *  https://github.com/redound/phalcon-rest-boilerplate
+ *
+ */
+
 class HttpMethods
 {
     const GET = "GET";

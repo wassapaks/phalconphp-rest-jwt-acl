@@ -20,7 +20,7 @@ class CollectionBootstrap implements IBootstrap
     {
         //We have to specify the routes
         //because once api versioning comes, we will be deleting route file just to disable that route version
-        //we do this so we can document it, and we do not to create addition loop code
+        //we do this so we can document it, and to avoid looping file just to get routes
         $app->resources(UserRoute::init('/user'));
         $app->resources(ExampleRoute::init('/example'));
 

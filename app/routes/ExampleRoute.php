@@ -32,7 +32,7 @@ class ExampleRoute extends Resources {
                     'map',
                     'pingAction',
                     true,
-                    ['s4', 's3']
+                    ['s4', 's2']
                 ]
             ]);
     }

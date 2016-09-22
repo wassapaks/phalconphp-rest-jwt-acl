@@ -66,5 +66,6 @@ composer install
 
 printf "${GREEN}---------- Creating Cache Folder ${NC} \n"
 sudo mkdir app/cache
+sudo chmod -R 776 app/cache
 
 printf "${GREEN}---------- Thank you for using PhalconRestJWT ${NC} \n\n"

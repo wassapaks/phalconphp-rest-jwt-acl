@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Apple
- * Date: 19/09/2016
- * Time: 2:45 PM
+ * Class Resources
+ * @package PhalconRestJWT
  */
 
 namespace PhalconRestJWT\App;
@@ -11,9 +9,23 @@ namespace PhalconRestJWT\App;
 
 class Resources extends \Phalcon\Mvc\Micro\Collection
 {
+    /**
+     * Pages that doesn't require authentication
+     * @var array i need to recreate this to pass unto micro
+     */
     protected $_noAuthPages = array();
+
+    /**
+     * Micro Collection Routes
+     * @var array i need to recreate this to pass unto micro
+     */
     protected $_collections = array();
 
+    /**
+     * Initialization when resourceRoute is called
+     *
+     * @return $this
+     */
     public static function init($prefix)
     {
 
@@ -26,25 +38,51 @@ class Resources extends \Phalcon\Mvc\Micro\Collection
         return $resource;
     }
 
+    /**
+     * Soon for documentation purpose
+     *
+     * @return $this
+     */
     public function setName($name){
         $this->name = $name;
         return $this;
     }
 
+    /**
+     * Soon for documentation purpose
+     *
+     * @return $this
+     */
     public function setDescription($description){
         $this->name = $description;
         return $this;
     }
 
+    /**
+     * collection prefix
+     *
+     * @return $this
+     */
     public function prefix($prefix){
         $this->setPrefix($prefix);
         return $this;
     }
 
+    /**
+     * collection handler
+     *
+     * @return $this
+     */
     public function handler($handler){
         $this->setHandler($handler);
         return $this;
     }
+
+    /**
+     * collection routes
+     *
+     * @return $this
+     */
     public function collections($route){
         $this->_collections = $route;
         foreach ($route as $url => $r) {
@@ -70,13 +108,25 @@ class Resources extends \Phalcon\Mvc\Micro\Collection
 
         return $this;
     }
+
+    /**
+     * @return _noAuthPages
+     */
     public function getNoAuth(){
         return $this->_noAuthPages;
     }
+
+    /**
+     * @return $this
+     */
     public function lazy($bol){
         $this->setLazy($bol);
         return $this;
     }
+
+    /**
+     * @return _collections
+     */
     public function getCollections(){
         return $this->_collections;
     }
