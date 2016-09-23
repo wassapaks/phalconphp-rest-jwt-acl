@@ -1,7 +1,7 @@
 Phalcon Rest JWT
 =================
 
-First of all i wanna give credits to CMOORE, Jeteokefe and Redound for their outstanding Phalcon Rest API Frameworks, i have learned a lot from your work, i took some of your code integrated them to create my own version of PhalconRest Micro Framework with JWT and ACL.
+First of all i wanna give credits to [CMOORE](https://github.com/cmoore4), [Jeteokefe](https://github.com/jeteokeeffe) and [Redound](https://github.com/redound) for their outstanding Phalcon Rest API Frameworks, i have learned a lot from your work, i took some of your code integrated them to create my own version of PhalconRest Micro Framework with JWT and ACL.
 
 
 This project uses Phalcon Micro Framework for REST API with JWT and ACL
