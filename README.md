@@ -178,9 +178,9 @@ $ php -m | grep -i "curl"
 curl
 ```
 
-Server Test
+Test
 -------------
-
+Currently working unit testing.
 
 Next Release
 -------------
