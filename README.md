@@ -242,6 +242,28 @@ Add Authorization header: Bearer **token from user/login**
 }
 ```
 
+**5.GET ```/example/testacl```
+
+User superagent have access to all Routes, User efren has limited routes specified in the userroles table in the database.
+
+Error when user not authorized for the api.
+
+```php
+{
+  "status": "error",
+  "data": null,
+  "message": "ACL Record says your not allowed to access this route.",
+  "error": {
+    "errorMessage": "ACL Record says your not allowed to access this route.",
+    "errorDev": {
+      "dev": "Accessing this route is not permitted.",
+      "internalCode": "NF5001",
+      "more": "ACL error."
+    }
+  }
+}
+```
+
 
 Client Requirements
 -------------
