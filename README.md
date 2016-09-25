@@ -165,6 +165,106 @@ You key will be the route and the value should be an array with the following fo
 Note: For Routes with Paramters, make sure the action you map to has the proper parameters set (in order to read parameters correctly). 
 http://docs.phalconphp.com/en/latest/reference/micro.html#defining-routes
 
+Example Routes
+-------------
+
+**1.POST ```/user/login```**
+
+username: superagent
+password: 12345678
+
+```php
+{
+  "status": "success",
+  "data": {
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjRDMDg1QUY3LUMzMzctNDBCQS1BRTM4LUIwQkVCOTYxRUNBRSIsImVtYWlsIjoiZWZyZW5iYXV0aXN0YWpyQGdtYWlsLmNvbSIsImZpcnN0bmFtZSI6ImVmcmVuIiwibGFzdG5hbWUiOiJiYXV0aXN0YSIsInBpY3R1cmUiOm51bGwsInBlcm1pc3Npb24iOm51bGwsImlhdCI6MTQ3NDgyMjQ5MCwiZXhwIjoxNDc0ODI0MjkwfQ.8R3z7pkqPapDKQDCSA-tcQ-IDRV4Zgb0ultAO0dMtik",
+    "refreshtoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjRDMDg1QUY3LUMzMzctNDBCQS1BRTM4LUIwQkVCOTYxRUNBRSIsImV4cCI6MTQ3NDkwODg5MCwiaWF0IjoxNDc0ODIyNDkwfQ.YC2LXmd80DgN6En7AFFqHMxSTUXYRr0hQCrumQKjC_k",
+    "refresh": false
+  },
+  "message": null
+}
+```
+
+**2.POST ```/example/testpost```**
+
+response in success
+```php
+{
+  "status": "success",
+  "data": {
+    "asdfaf": "asdfadsf"
+  },
+  "message": null
+}
+```
+
+response in exception
+```php
+{
+  "status": "error",
+  "data": null,
+  "message": "Post Empty",
+  "error": {
+    "errorMessage": "Post Empty",
+    "errorDev": {
+      "dev": "Dev Error only appears when dev env is enabled",
+      "internalCode": "Example Controller",
+      "more": "More error details here"
+    }
+  }
+}
+```
+You can check the error codes in ```app/library/exceptions/http```
+
+**3.POST OR GET```/example/testauthentication```**
+
+Add Authorization header: Bearer **token from user/login**
+
+```php
+{
+  "status": "success",
+  "data": [
+    "Route with authentication using MAP"
+  ],
+  "message": null
+}
+```
+
+**4.GET```/example/testget/{message}```**
+
+```php
+{
+  "status": "success",
+  "data": [
+    "asdfasdfasdf"
+  ],
+  "message": null
+}
+```
+
+**5.GET ```/example/testacl```
+
+User superagent have access to all Routes, User efren has limited routes specified in the userroles table in the database.
+
+Error when user not authorized for the api.
+
+```php
+{
+  "status": "error",
+  "data": null,
+  "message": "ACL Record says your not allowed to access this route.",
+  "error": {
+    "errorMessage": "ACL Record says your not allowed to access this route.",
+    "errorDev": {
+      "dev": "Accessing this route is not permitted.",
+      "internalCode": "NF5001",
+      "more": "ACL error."
+    }
+  }
+}
+```
+
+
 Client Requirements
 -------------
 PHP 5.3+
