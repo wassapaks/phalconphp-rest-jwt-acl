@@ -168,7 +168,7 @@ http://docs.phalconphp.com/en/latest/reference/micro.html#defining-routes
 Example Routes
 -------------
 
-/user/login
+1. ```/user/login```
 
 username: superagent
 password: 12345678
@@ -182,6 +182,36 @@ password: 12345678
     "refresh": false
   },
   "message": null
+}
+```
+
+2. ```/example/testpost```
+
+response in success
+```php
+{
+  "status": "success",
+  "data": {
+    "asdfaf": "asdfadsf"
+  },
+  "message": null
+}
+```
+
+response in exception
+```php
+{
+  "status": "error",
+  "data": null,
+  "message": "Post Empty",
+  "error": {
+    "errorMessage": "Post Empty",
+    "errorDev": {
+      "dev": "Dev Error only appears when dev env is enabled",
+      "internalCode": "Example Controller",
+      "more": "More error details here"
+    }
+  }
 }
 ```
 
