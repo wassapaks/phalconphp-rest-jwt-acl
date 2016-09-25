@@ -168,7 +168,7 @@ http://docs.phalconphp.com/en/latest/reference/micro.html#defining-routes
 Example Routes
 -------------
 
-1. ```/user/login```
+**1.POST ```/user/login```**
 
 username: superagent
 password: 12345678
@@ -185,7 +185,7 @@ password: 12345678
 }
 ```
 
-2. ```/example/testpost```
+**2.POST ```/example/testpost```**
 
 response in success
 ```php
@@ -214,6 +214,34 @@ response in exception
   }
 }
 ```
+You can check the error codes in ```app/library/exceptions/http```
+
+**3.POST OR GET```/example/testauthentication```**
+
+Add Authorization header: Bearer **token from user/login**
+
+```php
+{
+  "status": "success",
+  "data": [
+    "Route with authentication using MAP"
+  ],
+  "message": null
+}
+```
+
+**4.GET```/example/testget/{message}```**
+
+```php
+{
+  "status": "success",
+  "data": [
+    "asdfasdfasdf"
+  ],
+  "message": null
+}
+```
+
 
 Client Requirements
 -------------
