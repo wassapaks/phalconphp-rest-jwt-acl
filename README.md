@@ -165,6 +165,26 @@ You key will be the route and the value should be an array with the following fo
 Note: For Routes with Paramters, make sure the action you map to has the proper parameters set (in order to read parameters correctly). 
 http://docs.phalconphp.com/en/latest/reference/micro.html#defining-routes
 
+Example Routes
+-------------
+
+/user/login
+
+username: superagent
+password: 12345678
+
+```php
+{
+  "status": "success",
+  "data": {
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjRDMDg1QUY3LUMzMzctNDBCQS1BRTM4LUIwQkVCOTYxRUNBRSIsImVtYWlsIjoiZWZyZW5iYXV0aXN0YWpyQGdtYWlsLmNvbSIsImZpcnN0bmFtZSI6ImVmcmVuIiwibGFzdG5hbWUiOiJiYXV0aXN0YSIsInBpY3R1cmUiOm51bGwsInBlcm1pc3Npb24iOm51bGwsImlhdCI6MTQ3NDgyMjQ5MCwiZXhwIjoxNDc0ODI0MjkwfQ.8R3z7pkqPapDKQDCSA-tcQ-IDRV4Zgb0ultAO0dMtik",
+    "refreshtoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjRDMDg1QUY3LUMzMzctNDBCQS1BRTM4LUIwQkVCOTYxRUNBRSIsImV4cCI6MTQ3NDkwODg5MCwiaWF0IjoxNDc0ODIyNDkwfQ.YC2LXmd80DgN6En7AFFqHMxSTUXYRr0hQCrumQKjC_k",
+    "refresh": false
+  },
+  "message": null
+}
+```
+
 Client Requirements
 -------------
 PHP 5.3+
