@@ -1,11 +1,11 @@
 <?php
+
+namespace PhalconRestJWT\App;
+
 /**
  * Class Resources
  * @package PhalconRestJWT
  */
-
-namespace PhalconRestJWT\App;
-
 
 class Resources extends \Phalcon\Mvc\Micro\Collection
 {

@@ -242,7 +242,7 @@ Add Authorization header: Bearer **token from user/login**
 }
 ```
 
-**5.GET ```/example/testacl```
+**5.GET ```/example/testacl```**
 
 User superagent have access to all Routes, User efren has limited routes specified in the userroles table in the database.
 
@@ -264,6 +264,7 @@ Error when user not authorized for the api.
 }
 ```
 
+**NOTE: When adding route and its acl please always run the ```/user/initroles``` to generate the ACL list and store it to the cache directory.**
 
 Client Requirements
 -------------

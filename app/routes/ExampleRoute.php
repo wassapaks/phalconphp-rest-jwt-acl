@@ -35,6 +35,7 @@ class ExampleRoute extends Resources {
                 "/testacl" => [
                     'get',
                     'testacl',
+                    true,
                     ['s4', 's2']
                 ]
             ]);

@@ -19,13 +19,13 @@ class ExampleController extends ControllerBase {
             throw new Http(1010, 'Post Empty',
                  array(
                      'dev' => "Dev Error only appears when dev env is enabled",
-                     'internalCode' => "Example Controller",
+                     'internalCode' => "EXC-12",
                      'more' => "More error details here"
                  )
             );
         }
 
-        return $this->request->getPost();
+        return array("ApiStatus"=>201,$this->request->getPost());
 
 	}
 
