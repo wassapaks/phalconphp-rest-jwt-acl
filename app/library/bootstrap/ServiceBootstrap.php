@@ -28,23 +28,18 @@ class ServiceBootstrap implements IBootstrap
     public function boot(Micro $app, DiInterface $di, $config)
     {
 
-        $di->setShared(Services::DB, function() use ($config) {
-            
-            $type = strtolower($config->database->adapter);
+        $di->setShared(Services::DB, function() use ($di) {
+            $type = strtolower($di["config"]["database"]["adapter"]);
             $creds = array(
-                'host' => $config->database->host,
-                'username' => $config->database->username,
-                'password' => $config->database->password,
-                'dbname' => $config->database->name
+                'host' => $di["config"]["database"]["host"],
+                'username' => $di["config"]["database"]["username"],
+                'password' => $di["config"]["database"]["password"],
+                'dbname' => $di["config"]["database"]["name"]
             );
-
             $connection = new \Phalcon\Db\Adapter\Pdo\Mysql($creds);
-
             // Assign the eventsManager to the db adapter instance
-            $connection->setEventsManager($this->get(Services::EVENTS_MANAGER));
-
+            $connection->setEventsManager($di->get(Services::EVENTS_MANAGER));
             return $connection;
-
         });
 
 		// $di->setShared(Services::ERROR_HELPER, new \Services\ErrorMessages());
