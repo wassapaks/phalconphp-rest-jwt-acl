@@ -10,7 +10,7 @@ $settings = array(
         'host' => 'localhost',
         'username' => 'root',
         'password' => 'adminadmin123',
-        'name' => 'dbphalconrest',
+        'name' => 'phalconrestjwt',
         'port' => 3306
     ),
     'application' => array(

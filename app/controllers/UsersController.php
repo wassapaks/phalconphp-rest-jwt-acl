@@ -7,7 +7,6 @@ use App\Models\Users;
 
 class UsersController extends ControllerBase{
 
-
     public function userLogin(){
 
         if($this->request->isPost()){

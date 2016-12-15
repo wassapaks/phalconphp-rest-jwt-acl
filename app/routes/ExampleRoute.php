@@ -10,29 +10,34 @@ class ExampleRoute extends Resources {
             ->handler('App\Controllers\ExampleController')
             ->lazy(true)
             ->collections([
-                "/sampleData" => [
-                    "get",
-                    "sampleData",
+                [
+                    '/sampleData',
+                    'get',
+                    'sampleData',
                     false
                 ],
-                "/testpost" => [
+                [
+                    '/sampleData',
                     'post',
                     'samplePost',
                     false
                 ],
-                "/testauthentication" => [
+                [
+                    '/testauthentication',
                     'map',
                     'testAuth',
                     true,
                     's1'
                 ],
-                "/testget/{message}" => [
+                [
+                    '/testget/{message}',
                     'get',
                     'testGet',
                     false
                 ],
                 // login user = efren, pass= 12345678
-                "/testacl" => [
+                [
+                    '/testacl',
                     'get',
                     'testacl',
                     true,

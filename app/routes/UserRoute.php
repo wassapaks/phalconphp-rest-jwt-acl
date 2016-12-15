@@ -10,17 +10,20 @@ class UserRoute extends Resources {
             ->handler('App\Controllers\UsersController')
             ->lazy(true)
             ->collections([
-                "/login" => [
+                [   
+                    '/login',
                     'post',
                     'userLogin',
                     false,
                 ],
-                "/refreshtoken" => [
+                [
+                    '/refreshtoken',
                     'post',
                     'refreshtoken',
                     false
                 ],
-                "/initroles" => [
+                [
+                    '/initroles',
                     'get',
                     'initializeRoles',
                     false,

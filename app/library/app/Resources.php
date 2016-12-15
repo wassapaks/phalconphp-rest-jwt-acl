@@ -85,24 +85,25 @@ class Resources extends \Phalcon\Mvc\Micro\Collection
      */
     public function collections($route){
         $this->_collections = $route;
-        foreach ($route as $url => $r) {
+        foreach ($route as $r) {
 
-            $method = strtolower($r[0]);
+            $method = strtolower($r[1]);
 
-            if(!isset($r[2]))
-                $r[2]=false;
+            if(!isset($r[3]))
+                $r[3]=false;
 
-            if ($r[2]===false) {
+            if ($r[3]===false) {
 
                 if (!isset($this->_noAuthPages[$method])) {
                     $this->_noAuthPages[$method] = array();
                 }
 
-                $this->_noAuthPages[$method][] = $this->getPrefix().$url;
+                $this->_noAuthPages[$method][] = $this->getPrefix().$r[0];
             }
+
             $this->{$method}(
-                $url,
-                $r[1]
+                $r[0],
+                $r[2]
             );
         }
 

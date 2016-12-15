@@ -20,6 +20,7 @@
   "require": {
     "zircote/swagger-php": "^2.0",
     "tpyo/amazon-s3-php-class": "dev-master",
-    "firebase/php-jwt": "^3.0"
+    "firebase/php-jwt": "^3.0",
+    "phalcon/incubator": "dev-master" 
   }
 }
