@@ -35,6 +35,12 @@ class ExampleRoute extends Resources {
                     'testGet',
                     false
                 ],
+                [
+                    '/testput',
+                    'put',
+                    'testPut',
+                    false
+                ],
                 // login user = efren, pass= 12345678
                 [
                     '/testacl',

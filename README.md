@@ -143,13 +143,15 @@ place you prefix in the init()
 3.On the route Collections ```->collections([])``` is where you should place your routes
 ```php
 [
-    "/testpost" => [
+    [
+        '/testpost',
         'post',
         'newnewsample',
         false,
         's1',
     ],
-    "/ping" => [
+    [
+        '/ping',
         'map',
         'pingAction',
          true,

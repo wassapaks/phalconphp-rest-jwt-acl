@@ -37,6 +37,10 @@ class ExampleController extends ControllerBase {
         return array($message);
     }
 
+    public function test($message) {
+        return array($message);
+    }
+
     public function testacl() {
         return array("You are able to get in");
     }
