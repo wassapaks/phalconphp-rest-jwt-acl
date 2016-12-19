@@ -101,25 +101,29 @@ class ExampleRoute extends Resources {
             ->handler('App\Controllers\ExampleController')
             ->lazy(true)
             ->collections([
-                "/testpost" => [
+                [
+                    '/testpost',
                     'post',
                     'newnewsample',
                     false,
                     's1',
                 ],
-                "/testget/{id}" => [
+                [
+                    '/testget/{id}',
                     'get',
                     'testAction',
                     false,
                     's2'
                 ],
-                "/authtest" => [
+                [
+                    '/authtest',
                     'post',
                     'testAuth',
                     false,
                     's3'
                 ],
-                "/ping" => [
+                [
+                    '/ping',
                     'map',
                     'pingAction',
                     true,
@@ -266,7 +270,7 @@ Error when user not authorized for the api.
 }
 ```
 
-**NOTE: When adding route and its acl please always run the ```/user/initroles``` to generate the ACL list and store it to the cache directory.**
+**NOTE: When adding route and its acl please always run the ```/user/initroles``` to generate the ACL list and store it to the cache directory. Will be fixing this process soon.**
 
 Client Requirements
 -------------
