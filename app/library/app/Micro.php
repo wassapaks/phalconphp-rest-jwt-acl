@@ -42,7 +42,7 @@ class Micro extends \Phalcon\Mvc\Micro {
 		];
 
 		$this->_noAuthPages = array_merge_recursive($this->_noAuthPages, $collection->getNoAuth());
-		$this->mount($collection);
+		return $this->mount($collection);
 	}
 
 	/*
