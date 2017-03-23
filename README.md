@@ -293,3 +293,5 @@ Next Release
 -------------
 
 - Route cache
+- Will fix ACL to not hit initializeACL route when adding new routes
+- Will add firewall for login attempts
