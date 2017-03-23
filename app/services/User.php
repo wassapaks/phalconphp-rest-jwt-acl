@@ -107,7 +107,7 @@ class User{
 
             $query  = ' '.key($cred).'="'.$cred[key($cred)].'"';
         }else{
-            $query  = ' (username="'.$cred['username'].'" OR email="'.$cred['username'].'" AND  password="'. sha1($cred['password']).'")';
+            $query  = ' (username="'.$cred['username'].'" OR email="'.$cred['username'].'") AND  password="'. sha1($cred['password']).'"';
         }
 
         $user = $model::findFirst($query);

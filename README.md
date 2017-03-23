@@ -274,7 +274,7 @@ Error when user not authorized for the api.
 
 Client Requirements
 -------------
-PHP 5.3+
+PHP 5.6+
 
 Required PHP Modules
 - Curl (http://php.net/curl)
