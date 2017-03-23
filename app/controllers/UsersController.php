@@ -88,10 +88,70 @@ class UsersController extends ControllerBase{
              }
          }
 
+         var_dump($rolesResources);
+         die();
+
         $data = array(AclRoles::setAcl($rolesResources,$users) ? "Successfully created your roles!": "Something went wrong");
 
         return $data;
 
+    }
+
+    public function initializeAcl(){
+
+        $users = Users::find();
+
+         // $rolesResources = array($users->userid => array());
+         $collections = $this->di->getShared('collections');
+
+        $rec = new Users();
+
+
+        $rolesResources = array();
+
+        foreach($users as $m){
+            foreach($collections as $col){
+                // var_dump($col);
+                // var_dump($col->getHandlers());
+                $controller = str_replace('App\Controllers\\','',$col['handler']);
+                foreach($col['collection'] as $colh) {
+                    
+                    if($m->employeetype=="OWNER"){
+                        $rolesResources[$m->userid][$controller][] = $colh[2];
+                    }else{
+
+
+                     if(isset($colh[4])){
+                        $sql = ["userid=?0 AND role=?1", "bind"=>[$m->userid, $colh[4]]];
+                         if(is_array($colh[4])){
+                            $bind = [];
+                            $count = 1;
+                            foreach ($colh[4] as $val) {
+                                $bind[] = ' role=?' . $count;
+                                $count++;
+                            }
+
+                            $data = array_merge([$m->userid], $colh[4]);
+                            $sql = ["userid=?0 AND (".implode(' OR ', $bind).")", "bind"=> $data ];
+                         }
+                            $rec  = \App\Models\Userroles::findFirst($sql);
+                            if($rec){
+                                $rolesResources[$rec->userid][$controller][] = $colh[2];      
+                            }
+                     }
+
+                    }
+                }
+            }            
+        }
+
+        $msg = array();
+
+        foreach ($rolesResources as $key => $value) {
+            $msg[$key] = AclRoles::setAcl([$key => $value],[$key],  $key."-ACL-RECORD") ? "Successfully created your roles!": "Unsuccessfull";
+        }
+
+        return $msg;
     }
 
 }

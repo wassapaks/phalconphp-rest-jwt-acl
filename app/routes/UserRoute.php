@@ -25,7 +25,7 @@ class UserRoute extends Resources {
                 [
                     '/initroles',
                     'get',
-                    'initializeRoles',
+                    'initializeAcl',
                     false
                 ]
             ]);

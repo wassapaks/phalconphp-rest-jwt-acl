@@ -16,7 +16,7 @@ class AclRoles {
      * @param array $roles
      * @return FALSE|void
      */
-    public static function setAcl($resources,$roles) {
+    public static function setAcl($resources,$roles,$filename) {
         //Create the ACL
         $acl = new \Phalcon\Acl\Adapter\Memory();
         //The default action is DENY access
@@ -58,8 +58,12 @@ class AclRoles {
 
 
         try{
-            file_put_contents(APP_DIR."/cache/acl.data", serialize($acl));
-            return true;
+            $path = __DIR__ . "/../../cache/acl/";
+            if(!is_dir($path)){
+                throw new \Exception('Missing Cache');
+            }
+            
+            return file_put_contents($path . $filename . ".data", serialize($acl));
         }
         catch (\Exception $e){
             throw new \Micro\Exceptions\HTTPExceptions(
@@ -85,8 +89,23 @@ class AclRoles {
      */
     public static function getAcl($user,$activeHandler, $handler){
 
+        // Check if file exist
+        $aclfile = APP_DIR . "/cache/acl/" .$user . "-ACL-RECORD.data";
+
+        if(!is_file($aclfile)){
+            throw new \Micro\Exceptions\HTTPExceptions(
+                "Acl data cannot be read.",
+                500,
+                array(
+                    'dev' => 'Internal Error.',
+                    'internalCode' => 'ACL0002',
+                    'more' => ''
+                )
+            );
+        }
+
         // Restore acl object from serialized file
-        $acl = unserialize(file_get_contents(APP_DIR."/cache/acl.data"));
+        $acl = unserialize(file_get_contents($aclfile));
         
         $allowed = $acl->isAllowed($user, $activeHandler, $handler);
 
