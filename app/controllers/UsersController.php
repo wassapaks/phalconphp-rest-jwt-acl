@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use PhalconRestJWT\Security\AclRoles;
 use App\Models\Users;
+use PhalconRestJWT\Exceptions\Http;
 
 class UsersController extends ControllerBase{
 
@@ -88,41 +89,27 @@ class UsersController extends ControllerBase{
              }
          }
 
-         var_dump($rolesResources);
-         die();
-
         $data = array(AclRoles::setAcl($rolesResources,$users) ? "Successfully created your roles!": "Something went wrong");
 
         return $data;
 
     }
 
-    public function initializeAcl(){
-
-        $users = Users::find();
-
-         // $rolesResources = array($users->userid => array());
-         $collections = $this->di->getShared('collections');
-
-        $rec = new Users();
-
-
-        $rolesResources = array();
+    private function getUserRole($users){
+        $collections = $this->di->getShared('collections');
+        $rolesResources = [];
 
         foreach($users as $m){
             foreach($collections as $col){
-                // var_dump($col);
-                // var_dump($col->getHandlers());
                 $controller = str_replace('App\Controllers\\','',$col['handler']);
                 foreach($col['collection'] as $colh) {
                     
-                    if($m->employeetype=="OWNER"){
-                        $rolesResources[$m->userid][$controller][] = $colh[2];
+                    if($m['employeetype']=="OWNER"){
+                        $rolesResources[$m['userid']][$controller][] = $colh[2];
                     }else{
 
-
                      if(isset($colh[4])){
-                        $sql = ["userid=?0 AND role=?1", "bind"=>[$m->userid, $colh[4]]];
+                        $sql = ["userid=?0 AND role=?1", "bind"=>[$m['userid'], $colh[4]]];
                          if(is_array($colh[4])){
                             $bind = [];
                             $count = 1;
@@ -131,7 +118,7 @@ class UsersController extends ControllerBase{
                                 $count++;
                             }
 
-                            $data = array_merge([$m->userid], $colh[4]);
+                            $data = array_merge([$m['userid']], $colh[4]);
                             $sql = ["userid=?0 AND (".implode(' OR ', $bind).")", "bind"=> $data ];
                          }
                             $rec  = \App\Models\Userroles::findFirst($sql);
@@ -142,9 +129,8 @@ class UsersController extends ControllerBase{
 
                     }
                 }
-            }            
+            } 
         }
-
         $msg = array();
 
         foreach ($rolesResources as $key => $value) {
@@ -152,6 +138,22 @@ class UsersController extends ControllerBase{
         }
 
         return $msg;
+    }    
+
+    public function initializeAcl(){
+
+        $users = Users::find();
+
+        return $this->userService->setAclRoles($users->toArray(), $this->di->getShared('collections'));   
+    }
+
+    public function singleUserAcl($userid){
+
+        $users = Users::findFirst([
+                "userid = ?0",
+                "bind" => [$userid]
+            ]);
+        return $this->userService->setAclRoles([$users->toArray()], $this->di->getShared('collections'));
     }
 
 }

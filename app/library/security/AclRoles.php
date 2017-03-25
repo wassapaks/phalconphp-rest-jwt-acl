@@ -111,4 +111,5 @@ class AclRoles {
 
         return $allowed;
     }
+    
 }

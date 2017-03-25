@@ -41,7 +41,19 @@ class Acl implements IEvents {
             $ah = serialize($app->getActiveHandler()[0]);
             preg_match('/Controllers\\\(.*)";}/', $ah, $out);
 
-            if(AclRoles::getAcl( $this->_di->get(Services::USER_SERVICE)->getUser()->id, $out[1], $app->getActiveHandler()[1])){
+            $userid = $this->_di->get(Services::USER_SERVICE)->getUser()->id;
+
+            if(AclRoles::getAcl( $userid , $out[1], $app->getActiveHandler()[1])){
+                return true;
+            };
+
+            //im doing this only for dev purpose
+            $users = \App\Models\Users::findFirst([
+                "userid = ?0",
+                "bind" => [$userid]
+            ]);
+            $this->_di->get(Services::USER_SERVICE)->setAclRoles([$users->toArray()] , $this->_di->get(Services::COLLECTIONS));
+            if(AclRoles::getAcl( $userid , $out[1], $app->getActiveHandler()[1])){
                 return true;
             };
 

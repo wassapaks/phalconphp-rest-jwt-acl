@@ -27,6 +27,12 @@ class UserRoute extends Resources {
                     'get',
                     'initializeAcl',
                     false
+                ],
+                [
+                    '/userrole/{userid}',
+                    'get',
+                    'singleUserAcl',
+                    false
                 ]
             ]);
     }

@@ -48,6 +48,13 @@ class ExampleRoute extends Resources {
                     'testacl',
                     true,
                     ['s4', 's2']
+                ],
+                [   
+                    '/testaclandnewrouterrs',
+                    'get',
+                    'testtestrouters',
+                    true,
+                    ['s4', 's2']
                 ]
             ]);
     }

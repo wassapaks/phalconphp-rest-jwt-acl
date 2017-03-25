@@ -6,6 +6,8 @@ namespace App\Services;
 use Phalcon\DiInterface;
 use PhalconRestJWT\Exceptions\Http;
 use PhalconRestJWT\Constants\Services;
+use \App\Models\Userroles;
+use PhalconRestJWT\Security\AclRoles;
 
 /**
  * Class User Service
@@ -151,4 +153,50 @@ class User{
             'refreshtoken' => $rtoken
         );
     }
+
+    public function setAclRoles($users, $collections){
+        // $collections = $this->di->getShared('collections');
+        $rolesResources = [];
+
+        foreach($users as $m){
+            foreach($collections as $col){
+                $controller = str_replace('App\Controllers\\','',$col['handler']);
+                foreach($col['collection'] as $colh) {
+                    
+                    if($m['employeetype']=="OWNER"){
+                        $rolesResources[$m['userid']][$controller][] = $colh[2];
+                    }else{
+
+                     if(isset($colh[4])){
+                        $sql = ["userid=?0 AND role=?1", "bind"=>[$m['userid'], $colh[4]]];
+                         if(is_array($colh[4])){
+                            $bind = [];
+                            $count = 1;
+                            foreach ($colh[4] as $val) {
+                                $bind[] = ' role=?' . $count;
+                                $count++;
+                            }
+
+                            $data = array_merge([$m['userid']], $colh[4]);
+                            $sql = ["userid=?0 AND (".implode(' OR ', $bind).")", "bind"=> $data ];
+                         }
+                            $rec  = Userroles::findFirst($sql);
+                            if($rec){
+                                $rolesResources[$rec->userid][$controller][] = $colh[2];      
+                            }
+                     }
+
+                    }
+                }
+            } 
+        }
+        $msg = array();
+
+        foreach ($rolesResources as $key => $value) {
+            $msg[$key] = AclRoles::setAcl([$key => $value],[$key],  $key."-ACL-RECORD") ? "Successfully created your roles!": "Unsuccessfull";
+        }
+
+        return $msg;
+    }
+
 }
